@@ -1,31 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:wellplate/screens/onboarding/onboarding_view.dart';
-import 'package:wellplate/screens/home/home_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'screens/splash/splash_screen.dart'; // Import the SplashScreen
+import 'core/apptheme.dart';  // Import the AppTheme class
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  final prefs = await SharedPreferences.getInstance();
-  final onboarding = prefs.getBool("onboarding")??false;
-
-  runApp( MyApp(onboarding: onboarding));
+void main() {
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final bool onboarding;
-  const MyApp({super.key, this.onboarding = false});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: onboarding? const Home() : const OnboardingView(),
+      title: 'WellPlate',
+      theme: AppTheme.lightTheme,  // Use the lightTheme defined in AppTheme
+      debugShowCheckedModeBanner: false,  // Hide the debug banner
+      home: const SplashScreen(),  // SplashScreen will be the initial screen
     );
   }
 }
