@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wellplate/widgets/app_bar_widget.dart'; // Import the custom AppBar
-import 'package:wellplate/widgets/bottom_nav_bar_widget.dart'; // Import the custom BottomNavigationBar
+import 'package:wellplate/widgets/app_bar_widget.dart';
+import 'package:wellplate/widgets/bottom_nav_bar_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -10,8 +10,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
-  bool isDarkMode = false; // To manage theme state
-  int _currentIndex = 0; // To track the selected tab index
+  bool isDarkMode = false;
+  int _currentIndex = 0;
 
   void toggleTheme() {
     setState(() {
@@ -21,18 +21,36 @@ class HomeScreenState extends State<HomeScreen> {
 
   void _onTabSelected(int index) {
     setState(() {
-      _currentIndex = index; // Update the current tab index
+      _currentIndex = index;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: isDarkMode ? ThemeData.dark() : ThemeData.light(),
+      theme: ThemeData(
+        brightness: Brightness.light,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black, // Set text/icon color for light theme
+          iconTheme: IconThemeData(color: Colors.black),
+          titleTextStyle: TextStyle(color: Colors.black, fontSize: 20),
+        ),
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.grey[900],
+          foregroundColor: Colors.white, // Set text/icon color for dark theme
+          iconTheme: const IconThemeData(color: Colors.white),
+          titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
+        ),
+      ),
+      themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
       home: Scaffold(
         appBar: CustomAppBar(
           isDarkMode: isDarkMode,
-          toggleTheme: toggleTheme, // Pass the theme toggle function to AppBar
+          toggleTheme: toggleTheme,
         ),
         body: const Center(
           child: Text(
@@ -42,7 +60,7 @@ class HomeScreenState extends State<HomeScreen> {
         ),
         bottomNavigationBar: CustomBottomNavBar(
           currentIndex: _currentIndex,
-          onTabSelected: _onTabSelected, // Pass the tab selection handler to BottomNavBar
+          onTabSelected: _onTabSelected,
         ),
       ),
     );
