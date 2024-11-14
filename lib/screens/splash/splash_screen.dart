@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
       if (!mounted) return;  // Check if widget is still mounted
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const Home()),
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
     } else {
       if (!mounted) return;
