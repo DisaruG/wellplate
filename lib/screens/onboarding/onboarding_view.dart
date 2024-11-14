@@ -110,7 +110,7 @@ class _OnboardingViewState extends State<OnboardingView> {
           if (!mounted) return; // Check if widget is still mounted before navigating
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => const Home()),
+            MaterialPageRoute(builder: (context) => const HomeScreen()),
           );
         },
         child: const Text(
