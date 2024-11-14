@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:wellplate/widgets/app_bar_widget.dart'; // Import the custom AppBar
+import 'package:wellplate/widgets/bottom_nav_bar_widget.dart'; // Import the custom BottomNavigationBar
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -28,21 +30,9 @@ class HomeScreenState extends State<HomeScreen> {
     return MaterialApp(
       theme: isDarkMode ? ThemeData.dark() : ThemeData.light(),
       home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white, // AppBar with a white background
-          title: const Text(
-            'Dashboard',
-            style: TextStyle(color: Colors.black), // Title on the left
-          ),
-          actions: [
-            IconButton(
-              icon: Icon(
-                isDarkMode ? Icons.nightlight_round : Icons.wb_sunny, // Toggle icon
-                color: Colors.black, // Icon color
-              ),
-              onPressed: toggleTheme, // On press, toggle the theme
-            ),
-          ],
+        appBar: CustomAppBar(
+          isDarkMode: isDarkMode,
+          toggleTheme: toggleTheme, // Pass the theme toggle function to AppBar
         ),
         body: const Center(
           child: Text(
@@ -50,30 +40,9 @@ class HomeScreenState extends State<HomeScreen> {
             style: TextStyle(fontSize: 24),
           ),
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _currentIndex, // Set the current index to highlight the selected tab
-          onTap: _onTabSelected, // Handle tab selection
-          selectedItemColor: Colors.blue, // Use primary color for selected icon
-          unselectedItemColor: Colors.grey, // Unselected icons will be grey
-          backgroundColor: Colors.white, // Navigation bar with white background
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.dashboard_sharp),
-              label: 'Dashboard',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.fastfood),
-              label: 'Recipes',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.build),
-              label: 'Meal Builder',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.more_horiz),
-              label: 'More',
-            ),
-          ],
+        bottomNavigationBar: CustomBottomNavBar(
+          currentIndex: _currentIndex,
+          onTabSelected: _onTabSelected, // Pass the tab selection handler to BottomNavBar
         ),
       ),
     );
