@@ -6,10 +6,10 @@ class CustomBottomNavBar extends StatelessWidget {
   final Function(int) onTabSelected;
 
   const CustomBottomNavBar({
-    Key? key,
+    super.key,
     required this.currentIndex,
     required this.onTabSelected,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class CustomBottomNavBar extends StatelessWidget {
           label: 'Meal Builder',
         ),
         BottomNavigationBarItem(
-          icon: Icon(FontAwesomeIcons.cogs), // More icon from FontAwesome
+          icon: Icon(FontAwesomeIcons.gears), // More icon from FontAwesome
           label: 'More',
         ),
       ],
