@@ -9,8 +9,7 @@ class DailyTipCard extends StatelessWidget {
   });
 
   // Define a method to get a color based on the tip's content
-  Color _getCardColor(String tip, BuildContext context) {
-    // You can define more sophisticated logic based on your tips
+  Color _getCardColor(String tip) {
     if (tip.contains("water")) {
       return Colors.blue.shade100; // For hydration tips
     } else if (tip.contains("exercise")) {
@@ -20,62 +19,88 @@ class DailyTipCard extends StatelessWidget {
     } else if (tip.contains("stress")) {
       return Colors.orange.shade100; // For stress-related tips
     }
-    // Default color for other tips
-    return Colors.teal.shade100;
+    // You can add more conditions for different tips here, or use a random color approach if desired
+    return Colors.amber.shade100; // Default color if no conditions match
   }
 
-  // Define a method to get the color for the "Daily Health Tip" heading
-  Color _getHeadingTextColor(BuildContext context, Color cardColor) {
-    // If the card color is light, keep the text dark, else keep the text light for contrast
-    return cardColor.computeLuminance() > 0.5
-        ? Colors.black // Light card color means dark text for contrast
-        : Colors.white; // Dark card color means light text for contrast
+  // Define a method to get an emoji based on the tip's content
+  String _getTipEmoji(String tip) {
+    if (tip.contains("water")) {
+      return "💧"; // Emoji for hydration tips
+    } else if (tip.contains("exercise")) {
+      return "🏋️‍♀️"; // Emoji for exercise tips
+    } else if (tip.contains("sleep")) {
+      return "💤"; // Emoji for sleep tips
+    } else if (tip.contains("stress")) {
+      return "🧘‍♀️"; // Emoji for stress-related tips
+    }
+    return "🍏"; // Default emoji for health
   }
 
   @override
   Widget build(BuildContext context) {
     // Get the appropriate color for the card
-    Color cardColor = _getCardColor(tip, context);
-    // Get the heading text color based on card background brightness
-    Color headingColor = _getHeadingTextColor(context, cardColor);
+    Color cardColor = _getCardColor(tip);
+    // Get the appropriate emoji for the tip
+    String emoji = _getTipEmoji(tip);
 
     return SizedBox(
-      height: 120.0, // Fixed height for the card
-      width: double.infinity, // Full width
+      width: double.infinity, // Card takes full width
       child: Card(
         elevation: 4.0,
         margin: const EdgeInsets.all(16.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
-        color: cardColor, // Set the card color
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Daily Health Tip", // The heading for the tip
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: headingColor, // Set the heading color dynamically
-                ),
-              ),
-              const SizedBox(height: 8), // Space between the heading and the content
-              Flexible(
-                child: Text(
-                  tip, // Display the tip text as a single line
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: Color(0xFF333333), // Set text color to #333333
+        color: cardColor, // Set the background color
+        child: Stack(
+          children: [
+            // Main content of the card
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center, // Vertically center the content
+                crossAxisAlignment: CrossAxisAlignment.start, // Align text to the left
+                children: [
+                  const Text(
+                    "Daily Health Tip",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF333333),
+                    ),
                   ),
-                  overflow: TextOverflow.ellipsis, // To handle text overflow
-                  maxLines: 1, // Ensure it's a single line
+                  const SizedBox(height: 10), // Increased space between title and content
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          tip, // The health tip
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Color(0xFF333333),
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            // Emoji placed at the top-right corner
+            Positioned(
+              top: 10, // Adjusted to make sure the emoji is not too close to the edges
+              right: 10, // Adjusted for spacing from the right edge
+              child: Text(
+                emoji, // Emoji based on the health tip
+                style: const TextStyle(
+                  fontSize: 24, // Slightly smaller size for a balanced look
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
