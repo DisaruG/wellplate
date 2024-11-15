@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:wellplate/widgets/app_bar_widget.dart';
 import 'package:wellplate/widgets/bottom_nav_bar_widget.dart';
-import 'package:wellplate/widgets/daily_tip_card.dart'; // Import the updated Daily Tip Card
+import 'package:wellplate/widgets/daily_tip_card.dart'; // Import DailyTipCard
+import 'package:wellplate/providers/health_tip_provider.dart'; // Import HealthTipProvider
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,6 +14,15 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
   bool isDarkMode = false;
   int _currentIndex = 0;
+  String randomTip = ""; // Store the randomly selected health tip
+  final HealthTipProvider healthTipProvider = HealthTipProvider(); // Instance of the provider
+
+  @override
+  void initState() {
+    super.initState();
+    // Get a random tip when the screen is initialized
+    randomTip = healthTipProvider.getRandomTip();
+  }
 
   void toggleTheme() {
     setState(() {
@@ -53,19 +63,13 @@ class HomeScreenState extends State<HomeScreen> {
           isDarkMode: isDarkMode,
           toggleTheme: toggleTheme,
         ),
-        body: const SingleChildScrollView( // Keep scrolling functionality
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Daily Tip Card Section
-                DailyTipCard(
-                  tip: "Stay hydrated throughout the day! Drinking water boosts your metabolism and helps keep your skin healthy.",
-                ),
-                // Add more content sections here if needed
-              ],
-            ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              // Add the DailyTipCard with a randomly selected tip
+              DailyTipCard(tip: randomTip),
+              // Your other content goes here...
+            ],
           ),
         ),
         bottomNavigationBar: CustomBottomNavBar(
