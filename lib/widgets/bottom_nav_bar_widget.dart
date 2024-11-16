@@ -26,7 +26,7 @@ class CustomBottomNavBar extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           icon: Icon(FontAwesomeIcons.utensils), // Recipes icon from FontAwesome
-          label: 'Recipes',
+          label: 'Meal Planner',
         ),
         BottomNavigationBarItem(
           icon: Icon(FontAwesomeIcons.spoon), // Meal builder icon from FontAwesome
