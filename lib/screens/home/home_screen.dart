@@ -5,6 +5,8 @@ import 'package:wellplate/widgets/bottom_nav_bar_widget.dart';
 import 'package:wellplate/widgets/daily_tip_card.dart';
 import 'package:wellplate/providers/health_tip_provider.dart';
 import 'package:wellplate/widgets/recipe_input_buttons.dart';
+import 'package:wellplate/widgets/recipe_card_widget.dart';  // Import the RecipeCardWidget
+import 'package:wellplate/data/recipe_data.dart';  // Import recipe data
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -41,7 +43,6 @@ class HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  // Update the selected cuisine, type, or goal based on user selection
   void _updateSelection(String type, String selected) {
     setState(() {
       if (type == 'Cuisine') {
@@ -132,6 +133,8 @@ class HomeScreenState extends State<HomeScreen> {
                 selectedType: selectedType,
                 selectedGoal: selectedGoal,
               ),
+              const SizedBox(height: 16),
+              _buildRecipeList(),
             ],
           ),
         ),
@@ -143,7 +146,32 @@ class HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // Show Bottom Sheet with CupertinoPicker
+  Widget _buildRecipeList() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: GridView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 8,
+          mainAxisSpacing: 8,
+          childAspectRatio: 0.8,
+        ),
+        itemCount: recipes.length,
+        itemBuilder: (context, index) {
+          final recipe = recipes[index];
+          return RecipeCardWidget(
+            imageAsset: recipe.imageAsset,  // Using local assets
+            foodName: recipe.name,
+            cuisineType: recipe.cuisine,
+            foodType: recipe.type,
+          );
+        },
+      ),
+    );
+  }
+
   void _showBottomSheet(BuildContext context, String type, List<String> items,
       ValueChanged<String> onItemSelected) {
     int selectedIndex = 0;
