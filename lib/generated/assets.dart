@@ -3,10 +3,22 @@ class Assets {
   Assets._();
 
   static const String assetsCarbonara = 'assets/carbonara.jpg';
+  static const String assetsCheeseburger = 'assets/cheeseburger.jpg';
+  static const String assetsDal = 'assets/Dal.jpg';
   static const String assetsFitnesstracker = 'assets/Fitnesstracker.gif';
+  static const String assetsGuacamole = 'assets/Guacamole.jpg';
   static const String assetsHealthyfood = 'assets/healthyfood.gif';
   static const String assetsHealthylifestyle = 'assets/Healthylifestyle.gif';
+  static const String assetsKungpao = 'assets/kungpao.jpg';
   static const String assetsLeadership = 'assets/leadership.gif';
+  static const String assetsMasala = 'assets/Masala.jpg';
+  static const String assetsPizza = 'assets/pizza.jpg';
+  static const String assetsQuesadillas = 'assets/Quesadillas.jpg';
+  static const String assetsSweet = 'assets/Sweet.jpg';
+  static const String assetsTacos = 'assets/Tacos.jpg';
+  static const String assetsTikka = 'assets/tikka.jpg';
+  static const String assetsVegan = 'assets/vegan.jpg';
+  static const String assetsVegetableLasagna = 'assets/VegetableLasagna.jpg';
   static const String assetsVegetablefry = 'assets/Vegetablefry.jpg';
 
 }
