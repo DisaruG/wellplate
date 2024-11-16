@@ -15,6 +15,7 @@ class Recipe {
 }
 
 final List<Recipe> recipes = [
+  // Italian Recipes
   Recipe(
     name: "Spaghetti Carbonara",
     cuisine: "Italian",
@@ -22,11 +23,19 @@ final List<Recipe> recipes = [
     imageAsset: "assets/carbonara.jpg", // Image from assets folder
   ),
   Recipe(
-    name: "Vegetable Stir Fry",
-    cuisine: "Chinese",
+    name: "Vegetarian Lasagna",
+    cuisine: "Italian",
     type: "Vegetarian",
-    imageAsset: "assets/Vegetablefry.jpg", // Image from assets folder
+    imageAsset: "assets/VegetableLasagna.jpg", // Image from assets folder
   ),
+  Recipe(
+    name: "Margherita Pizza",
+    cuisine: "Italian",
+    type: "Vegetarian",
+    imageAsset: "assets/pizza.jpg", // Image from assets folder
+  ),
+
+  // Chinese Recipes
   Recipe(
     name: "Vegetable Stir Fry",
     cuisine: "Chinese",
@@ -34,46 +43,69 @@ final List<Recipe> recipes = [
     imageAsset: "assets/Vegetablefry.jpg", // Image from assets folder
   ),
   Recipe(
-    name: "Vegetable Stir Fry",
+    name: "Kung Pao Chicken",
     cuisine: "Chinese",
-    type: "Vegetarian",
-    imageAsset: "assets/Vegetablefry.jpg", // Image from assets folder
+    type: "Non-Vegetarian",
+    imageAsset: "assets/kungpao.jpg", // Image from assets folder
   ),
   Recipe(
-    name: "Vegetable Stir Fry",
+    name: "Sweet and Sour Pork",
     cuisine: "Chinese",
+    type: "Non-Vegetarian",
+    imageAsset: "assets/Sweet.jpg", // Image from assets folder
+  ),
+
+  // Indian Recipes
+  Recipe(
+    name: "Paneer Butter Masala",
+    cuisine: "Indian",
     type: "Vegetarian",
-    imageAsset: "assets/Vegetablefry.jpg", // Image from assets folder
+    imageAsset: "assets/Masala.jpg", // Image from assets folder
   ),
   Recipe(
-    name: "Vegetable Stir Fry",
-    cuisine: "Chinese",
-    type: "Vegetarian",
-    imageAsset: "assets/Vegetablefry.jpg", // Image from assets folder
+    name: "Chicken Tikka Masala",
+    cuisine: "Indian",
+    type: "Non-Vegetarian",
+    imageAsset: "assets/tikka.jpg", // Image from assets folder
   ),
   Recipe(
-    name: "Vegetable Stir Fry",
-    cuisine: "Chinese",
-    type: "Vegetarian",
-    imageAsset: "assets/Vegetablefry.jpg", // Image from assets folder
+    name: "Dal Tadka",
+    cuisine: "Indian",
+    type: "Vegan",
+    imageAsset: "assets/Dal.jpg", // Image from assets folder
+  ),
+
+  // Mexican Recipes
+  Recipe(
+    name: "Tacos",
+    cuisine: "Mexican",
+    type: "Non-Vegetarian",
+    imageAsset: "assets/Tacos.jpg", // Image from assets folder
   ),
   Recipe(
-    name: "Vegetable Stir Fry",
-    cuisine: "Chinese",
+    name: "Vegetarian Quesadilla",
+    cuisine: "Mexican",
     type: "Vegetarian",
-    imageAsset: "assets/Vegetablefry.jpg", // Image from assets folder
+    imageAsset: "assets/Quesadillas.jpg", // Image from assets folder
   ),
   Recipe(
-    name: "Vegetable Stir Fry",
-    cuisine: "Chinese",
-    type: "Vegetarian",
-    imageAsset: "assets/Vegetablefry.jpg", // Image from assets folder
+    name: "Guacamole with Tortilla Chips",
+    cuisine: "Mexican",
+    type: "Vegan",
+    imageAsset: "assets/Guacamole.jpg", // Image from assets folder
+  ),
+
+  // American Recipes
+  Recipe(
+    name: "Vegan Burger",
+    cuisine: "American",
+    type: "Vegan",
+    imageAsset: "assets/vegan.jpg", // Image from assets folder
   ),
   Recipe(
-    name: "Vegetable Stir Fry",
-    cuisine: "Chinese",
-    type: "Vegetarian",
-    imageAsset: "assets/Vegetablefry.jpg", // Image from assets folder
+    name: "Classic Cheeseburger",
+    cuisine: "American",
+    type: "Non-Vegetarian",
+    imageAsset: "assets/cheeseburger.jpg", // Image from assets folder
   ),
-  // Add more recipes as needed
 ];
