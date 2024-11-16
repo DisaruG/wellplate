@@ -24,6 +24,7 @@ class HomeScreenState extends State<HomeScreen> {
   String? selectedCuisine;
   String? selectedType;
   String? selectedGoal;
+  List<Recipe> filteredRecipeList = [];  // List to hold filtered recipes
 
   @override
   void initState() {
@@ -55,97 +56,38 @@ class HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        brightness: Brightness.light,
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-          iconTheme: IconThemeData(color: Colors.black),
-          titleTextStyle: TextStyle(color: Colors.black, fontSize: 20),
-        ),
-      ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        appBarTheme: AppBarTheme(
-          backgroundColor: Colors.grey[900],
-          foregroundColor: Colors.white,
-          iconTheme: const IconThemeData(color: Colors.white),
-          titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
-        ),
-      ),
-      themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
-      home: Scaffold(
-        appBar: CustomAppBar(
-          isDarkMode: isDarkMode,
-          toggleTheme: toggleTheme,
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              DailyTipCard(tip: randomTip),
-              const SizedBox(height: 16),
-              RecipeInputButtons(
-                cuisines: const [
-                  'Italian', 'Chinese', 'Indian', 'Japanese', 'Mexican', 'French',
-                  'Thai', 'American', 'Mediterranean', 'Spanish', 'Korean',
-                  'Vietnamese', 'Brazilian', 'Caribbean', 'Greek'
-                ],
-                types: const [
-                  'Vegetarian', 'Non-Vegetarian', 'Vegan', 'Keto', 'Low-Carb',
-                  'High-Protein', 'Gluten-Free'
-                ],
-                goals: const [
-                  'Weight Loss', 'Muscle Gain', 'Maintenance', 'Balanced Nutrition',
-                  'Weight Maintenance', 'Low-Calorie', 'Low-Carb'
-                ],
-                onCuisinePressed: () {
-                  _showBottomSheet(context, 'Cuisine', const [
-                    'Italian', 'Chinese', 'Indian', 'Japanese', 'Mexican', 'French',
-                    'Thai', 'American'
-                  ], (selected) {
-                    _updateSelection('Cuisine', selected);
-                  });
-                },
-                onTypePressed: () {
-                  _showBottomSheet(context, 'Type', const [
-                    'Vegetarian', 'Non-Vegetarian', 'Vegan', 'Keto', 'Low-Carb',
-                    'High-Protein', 'Gluten-Free'
-                  ], (selected) {
-                    _updateSelection('Type', selected);
-                  });
-                },
-                onGoalPressed: () {
-                  _showBottomSheet(context, 'Goal', const [
-                    'Weight Loss', 'Muscle Gain', 'Maintenance', 'Balanced',
-                    'Low-Calorie', 'Low-Carb'
-                  ], (selected) {
-                    _updateSelection('Goal', selected);
-                  });
-                },
-                onFilterPressed: () {
-                  // Handle Filter button press logic
-                },
-                selectedCuisine: selectedCuisine,
-                selectedType: selectedType,
-                selectedGoal: selectedGoal,
-              ),
-              const SizedBox(height: 16),
-              _buildRecipeList(),
-            ],
-          ),
-        ),
-        bottomNavigationBar: CustomBottomNavBar(
-          currentIndex: _currentIndex,
-          onTabSelected: _onTabSelected,
-        ),
-      ),
-    );
+  // Handle Filter button press logic
+  void _onFilterPressed() {
+    if (selectedCuisine == null || selectedType == null || selectedGoal == null) {
+      // Show message if any filter is not selected
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please select all filters: Cuisine, Type, and Goal.')),
+      );
+    } else {
+      // Apply the filter
+      _filterRecipes();
+    }
   }
 
+  // Apply filter logic based on selected criteria
+  void _filterRecipes() {
+    List<Recipe> filteredRecipes = recipes.where((recipe) {
+      bool matchesCuisine = selectedCuisine == null || recipe.cuisine == selectedCuisine;
+      bool matchesType = selectedType == null || recipe.type == selectedType;
+      bool matchesGoal = selectedGoal == null || recipe.goal == selectedGoal;
+
+      return matchesCuisine && matchesType && matchesGoal;
+    }).toList();
+
+    setState(() {
+      filteredRecipeList = filteredRecipes;
+    });
+  }
+
+  // Build the list of recipes, either filtered or unfiltered
   Widget _buildRecipeList() {
+    final listToDisplay = filteredRecipeList.isNotEmpty ? filteredRecipeList : recipes;
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GridView.builder(
@@ -157,9 +99,9 @@ class HomeScreenState extends State<HomeScreen> {
           mainAxisSpacing: 8,
           childAspectRatio: 0.8,
         ),
-        itemCount: recipes.length,
+        itemCount: listToDisplay.length,
         itemBuilder: (context, index) {
-          final recipe = recipes[index];
+          final recipe = listToDisplay[index];
           return RecipeCardWidget(
             imageAsset: recipe.imageAsset,  // Using local assets
             foodName: recipe.name,
@@ -171,6 +113,7 @@ class HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  // Show the bottom sheet for selecting a filter type (Cuisine, Type, Goal)
   void _showBottomSheet(BuildContext context, String type, List<String> items,
       ValueChanged<String> onItemSelected) {
     int selectedIndex = 0;
@@ -240,6 +183,93 @@ class HomeScreenState extends State<HomeScreen> {
           ),
         );
       },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData(
+        brightness: Brightness.light,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+          iconTheme: IconThemeData(color: Colors.black),
+          titleTextStyle: TextStyle(color: Colors.black, fontSize: 20),
+        ),
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.grey[900],
+          foregroundColor: Colors.white,
+          iconTheme: const IconThemeData(color: Colors.white),
+          titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
+        ),
+      ),
+      themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
+      home: Scaffold(
+        appBar: CustomAppBar(
+          isDarkMode: isDarkMode,
+          toggleTheme: toggleTheme,
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              DailyTipCard(tip: randomTip),
+              const SizedBox(height: 16),
+              RecipeInputButtons(
+                cuisines: const [
+                  'Italian', 'Chinese', 'Indian', 'Japanese', 'Mexican', 'French',
+                  'Thai', 'American'
+                ],
+                types: const [
+                  'Vegetarian', 'Non-Vegetarian', 'Vegan', 'Keto', 'Low-Carb',
+                  'High-Protein', 'Gluten-Free'
+                ],
+                goals: const [
+                  'Weight Loss', 'Muscle Gain', 'Maintenance', 'Balanced Nutrition',
+                  'Weight Maintenance', 'Low-Calorie', 'Low-Carb'
+                ],
+                onCuisinePressed: () {
+                  _showBottomSheet(context, 'Cuisine', const [
+                    'Italian', 'Chinese', 'Indian', 'Japanese', 'Mexican', 'French',
+                    'Thai', 'American'
+                  ], (selected) {
+                    _updateSelection('Cuisine', selected);
+                  });
+                },
+                onTypePressed: () {
+                  _showBottomSheet(context, 'Type', const [
+                    'Vegetarian', 'Non-Vegetarian', 'Vegan', 'Keto', 'Low-Carb',
+                    'High-Protein', 'Gluten-Free'
+                  ], (selected) {
+                    _updateSelection('Type', selected);
+                  });
+                },
+                onGoalPressed: () {
+                  _showBottomSheet(context, 'Goal', const [
+                    'Weight Loss', 'Muscle Gain', 'Maintenance', 'Balanced',
+                    'Low-Calorie', 'Low-Carb'
+                  ], (selected) {
+                    _updateSelection('Goal', selected);
+                  });
+                },
+                onFilterPressed: _onFilterPressed,  // Hook up the filter button
+                selectedCuisine: selectedCuisine,
+                selectedType: selectedType,
+                selectedGoal: selectedGoal,
+              ),
+              const SizedBox(height: 16),
+              _buildRecipeList(),
+            ],
+          ),
+        ),
+        bottomNavigationBar: CustomBottomNavBar(
+          currentIndex: _currentIndex,
+          onTabSelected: _onTabSelected,
+        ),
+      ),
     );
   }
 }
