@@ -201,32 +201,35 @@ class HomeScreenState extends State<HomeScreen> {
           height: 300, // Fixed height for the picker
           child: Column(
             children: [
-              // Header with Done button
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                color: isDarkMode ? Colors.grey[900] : Colors.grey[200],
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Select $type',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: isDarkMode ? Colors.white : Colors.black,
+              // Header with Done button and rounded corners
+              ClipRRect(
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  color: isDarkMode ? Colors.grey[900] : Colors.grey[200],
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Select $type',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: isDarkMode ? Colors.white : Colors.black,
+                        ),
                       ),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        onItemSelected(items[selectedIndex]);
-                        Navigator.pop(context); // Close the modal
-                      },
-                      child: const Text(
-                        'Done',
-                        style: TextStyle(fontSize: 16, color: Colors.blue),
+                      TextButton(
+                        onPressed: () {
+                          onItemSelected(items[selectedIndex]);
+                          Navigator.pop(context); // Close the modal
+                        },
+                        child: const Text(
+                          'Done',
+                          style: TextStyle(fontSize: 16, color: Colors.blue),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               Expanded(
