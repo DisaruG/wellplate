@@ -71,19 +71,24 @@ class RecipeInputButtons extends StatelessWidget {
           ),
           const SizedBox(height: 12), // Space between row and Filter button
 
-          // Filter Button (unchanged, full width)
+          // Filter Button (Blue color)
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
               onPressed: onFilterPressed,
               style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 12.0),
+                padding: const EdgeInsets.symmetric(vertical: 12.0), backgroundColor: Colors.blue,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
-                minimumSize: const Size(double.infinity, 50), // Full width, increased height
+                minimumSize: const Size(double.infinity, 50), // Set the button color to blue
               ),
-              child: const Text("Filter Recipes"),
+              child: const Text(
+                  "Filter Recipes",
+                style: TextStyle(
+                  color: Color(0xFFFFFFFF),
+                ),
+              ),
             ),
           ),
         ],
