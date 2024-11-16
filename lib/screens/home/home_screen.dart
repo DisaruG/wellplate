@@ -26,10 +26,21 @@ class HomeScreenState extends State<HomeScreen> {
   String? selectedGoal;
   List<Recipe> filteredRecipeList = [];  // List to hold filtered recipes
 
+  final ScrollController _scrollController = ScrollController();  // Marked as final
+  bool _isScrolling = false;  // Track scrolling state for visibility
+
   @override
   void initState() {
     super.initState();
     randomTip = healthTipProvider.getRandomTip();
+
+    // Add ScrollController listener
+    _scrollController.addListener(() {
+      setState(() {
+        // Show the button if scrolled more than 200 pixels
+        _isScrolling = _scrollController.offset > 200;
+      });
+    });
   }
 
   void toggleTheme() {
@@ -187,6 +198,13 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   @override
+  void dispose() {
+    // Remove the listener when the screen is disposed
+    _scrollController.removeListener(() {});
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
@@ -214,6 +232,7 @@ class HomeScreenState extends State<HomeScreen> {
           toggleTheme: toggleTheme,
         ),
         body: SingleChildScrollView(
+          controller: _scrollController,  // Add ScrollController
           child: Column(
             children: [
               DailyTipCard(tip: randomTip),
@@ -268,6 +287,20 @@ class HomeScreenState extends State<HomeScreen> {
         bottomNavigationBar: CustomBottomNavBar(
           currentIndex: _currentIndex,
           onTabSelected: _onTabSelected,
+        ),
+        floatingActionButton: Visibility(
+          visible: _isScrolling,  // Show the button based on scroll state
+          child: FloatingActionButton(
+            onPressed: () {
+              _scrollController.animateTo(
+                0,
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+              );
+            },
+            backgroundColor: Colors.blue,
+            child: const Icon(Icons.arrow_upward),
+          ),
         ),
       ),
     );
