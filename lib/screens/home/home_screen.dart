@@ -211,9 +211,10 @@ class HomeScreenState extends State<HomeScreen> {
                     Text(
                       'Select $type',
                       style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: isDarkMode ? Colors.white : Colors.black),
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: isDarkMode ? Colors.white : Colors.black,
+                      ),
                     ),
                     TextButton(
                       onPressed: () {
@@ -240,11 +241,16 @@ class HomeScreenState extends State<HomeScreen> {
                   },
                   children: items
                       .map(
-                        (item) => Text(
-                      item,
-                      style: TextStyle(
+                        (item) => Center(
+                      child: Text(
+                        item,
+                        style: TextStyle(
                           fontSize: 18,
-                          color: isDarkMode ? Colors.white : Colors.black),
+                          color:
+                          isDarkMode ? Colors.white : Colors.black,
+                        ),
+                        textAlign: TextAlign.center, // Center the text
+                      ),
                     ),
                   )
                       .toList(),
