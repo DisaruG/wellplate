@@ -1,9 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wellplate/widgets/app_bar_widget.dart';
 import 'package:wellplate/widgets/bottom_nav_bar_widget.dart';
 import 'package:wellplate/widgets/daily_tip_card.dart'; // Import DailyTipCard
 import 'package:wellplate/providers/health_tip_provider.dart'; // Import HealthTipProvider
-import 'package:wellplate/widgets/recipe_input_buttons.dart'; // Import the RecipeInputButtons widget
+import 'package:wellplate/widgets/recipe_input_buttons.dart'; // Import RecipeInputButtons widget
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,10 +19,13 @@ class HomeScreenState extends State<HomeScreen> {
   String randomTip = ""; // Store the randomly selected health tip
   final HealthTipProvider healthTipProvider = HealthTipProvider(); // Instance of the provider
 
+  String? selectedCuisine;
+  String? selectedType;
+  String? selectedGoal;
+
   @override
   void initState() {
     super.initState();
-    // Get a random tip when the screen is initialized
     randomTip = healthTipProvider.getRandomTip();
   }
 
@@ -34,6 +38,19 @@ class HomeScreenState extends State<HomeScreen> {
   void _onTabSelected(int index) {
     setState(() {
       _currentIndex = index;
+    });
+  }
+
+  // Update the selected cuisine, type, or goal based on user selection
+  void _updateSelection(String type, String selected) {
+    setState(() {
+      if (type == 'Cuisine') {
+        selectedCuisine = selected;
+      } else if (type == 'Type') {
+        selectedType = selected;
+      } else if (type == 'Goal') {
+        selectedGoal = selected;
+      }
     });
   }
 
@@ -72,20 +89,92 @@ class HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 16),
               // Recipe Input Buttons
               RecipeInputButtons(
+                cuisines: const [
+                  'Italian',
+                  'Chinese',
+                  'Indian',
+                  'Japanese',
+                  'Mexican',
+                  'French',
+                  'Thai',
+                  'American',
+                  'Mediterranean',
+                  'Spanish',
+                  'Korean',
+                  'Vietnamese',
+                  'Brazilian',
+                  'Caribbean',
+                  'Greek'
+                ], // Example cuisines
+                types: const [
+                  'Vegetarian',
+                  'Non-Vegetarian',
+                  'Vegan',
+                  'Keto',
+                  'Low-Carb',
+                  'High-Protein',
+                  'Gluten-Free'
+                ], // Example types
+                goals: const [
+                  'Weight Loss',
+                  'Muscle Gain',
+                  'Maintenance',
+                  'Balanced Nutrition',
+                  'Weight Maintenance',
+                  'Low-Calorie',
+                  'Low-Carb'
+                ], // Example goals
                 onCuisinePressed: () {
-                  // Handle Cuisine button press
+                  _showBottomSheet(context, 'Cuisine', const [
+                    'Italian',
+                    'Chinese',
+                    'Indian',
+                    'Japanese',
+                    'Mexican',
+                    'French',
+                    'Thai',
+                    'American',
+                    'Mediterranean',
+                    'Spanish',
+                    'Korean',
+                    'Vietnamese',
+                    'Brazilian',
+                    'Caribbean',
+                    'Greek'
+                  ], (selected) {
+                    _updateSelection('Cuisine', selected);
+                  });
                 },
                 onTypePressed: () {
-                  // Handle Type button press
+                  _showBottomSheet(context, 'Type', const [
+                    'Vegetarian',
+                    'Non-Vegetarian',
+                    'Vegan',
+                    'Keto',
+                    'Low-Carb',
+                    'High-Protein',
+                    'Gluten-Free'
+                  ], (selected) {
+                    _updateSelection('Type', selected);
+                  });
                 },
                 onGoalPressed: () {
-                  // Handle Goal button press
+                  _showBottomSheet(context, 'Goal', const [
+                    'Weight Loss',
+                    'Muscle Gain',
+                    'Maintenance',
+                    'Balanced Nutrition',
+                    'Weight Maintenance',
+                    'Low-Calorie',
+                    'Low-Carb'
+                  ], (selected) {
+                    _updateSelection('Goal', selected);
+                  });
                 },
                 onFilterPressed: () {
-                  // Handle Filter Recipes button press
+                  // Handle Filter button press logic
                 },
               ),
-              // Additional content can go here...
             ],
           ),
         ),
@@ -94,6 +183,70 @@ class HomeScreenState extends State<HomeScreen> {
           onTabSelected: _onTabSelected,
         ),
       ),
+    );
+  }
+
+  // Show Bottom Sheet with CupertinoPicker for iOS-style scrolling
+  void _showBottomSheet(BuildContext context, String type, List<String> items,
+      ValueChanged<String> onItemSelected) {
+    int selectedIndex = 0;
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true, // Ensures full height for Cupertino picker
+      builder: (BuildContext context) {
+        return SizedBox(
+          height: 250, // Fixed height for the picker
+          child: Column(
+            children: [
+              // Header with Done button
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  border: const Border(
+                    bottom: BorderSide(color: Colors.grey, width: 1),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Select $type',
+                      style: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.w600),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        onItemSelected(items[selectedIndex]);
+                        Navigator.pop(context); // Close the modal
+                      },
+                      child: const Text(
+                        'Done',
+                        style: TextStyle(fontSize: 16, color: Colors.blue),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: CupertinoPicker(
+                  scrollController:
+                  FixedExtentScrollController(initialItem: selectedIndex),
+                  itemExtent: 32.0, // Height of each item
+                  onSelectedItemChanged: (int index) {
+                    selectedIndex = index;
+                  },
+                  children: items
+                      .map((item) => Text(item,
+                      style: const TextStyle(fontSize: 18)))
+                      .toList(),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
