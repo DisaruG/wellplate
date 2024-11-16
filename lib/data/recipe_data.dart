@@ -4,12 +4,14 @@ class Recipe {
   final String name;
   final String cuisine;
   final String type;
+  final String goal;
   final String imageAsset;
 
   Recipe({
     required this.name,
     required this.cuisine,
     required this.type,
+    required this.goal,
     required this.imageAsset,
   });
 }
@@ -20,19 +22,129 @@ final List<Recipe> recipes = [
     name: "Spaghetti Carbonara",
     cuisine: "Italian",
     type: "Non-Vegetarian",
+    goal: "Weight Loss",
     imageAsset: "assets/carbonara.jpg", // Image from assets folder
+  ),
+  Recipe(
+    name: "Spaghetti Carbonara",
+    cuisine: "Italian",
+    type: "Non-Vegetarian",
+    goal: "Muscle Gain",
+    imageAsset: "assets/carbonara.jpg",
+  ),
+  Recipe(
+    name: "Spaghetti Carbonara",
+    cuisine: "Italian",
+    type: "Non-Vegetarian",
+    goal: "Maintenance",
+    imageAsset: "assets/carbonara.jpg",
+  ),
+  Recipe(
+    name: "Spaghetti Carbonara",
+    cuisine: "Italian",
+    type: "Non-Vegetarian",
+    goal: "Balanced",
+    imageAsset: "assets/carbonara.jpg",
+  ),
+  Recipe(
+    name: "Spaghetti Carbonara",
+    cuisine: "Italian",
+    type: "Non-Vegetarian",
+    goal: "Low-Calorie",
+    imageAsset: "assets/carbonara.jpg",
+  ),
+  Recipe(
+    name: "Spaghetti Carbonara",
+    cuisine: "Italian",
+    type: "Non-Vegetarian",
+    goal: "Low-Carb",
+    imageAsset: "assets/carbonara.jpg",
+  ),
+
+  Recipe(
+    name: "Vegetarian Lasagna",
+    cuisine: "Italian",
+    type: "Vegetarian",
+    goal: "Weight Loss",
+    imageAsset: "assets/VegetableLasagna.jpg",
   ),
   Recipe(
     name: "Vegetarian Lasagna",
     cuisine: "Italian",
     type: "Vegetarian",
-    imageAsset: "assets/VegetableLasagna.jpg", // Image from assets folder
+    goal: "Muscle Gain",
+    imageAsset: "assets/VegetableLasagna.jpg",
+  ),
+  Recipe(
+    name: "Vegetarian Lasagna",
+    cuisine: "Italian",
+    type: "Vegetarian",
+    goal: "Maintenance",
+    imageAsset: "assets/VegetableLasagna.jpg",
+  ),
+  Recipe(
+    name: "Vegetarian Lasagna",
+    cuisine: "Italian",
+    type: "Vegetarian",
+    goal: "Balanced",
+    imageAsset: "assets/VegetableLasagna.jpg",
+  ),
+  Recipe(
+    name: "Vegetarian Lasagna",
+    cuisine: "Italian",
+    type: "Vegetarian",
+    goal: "Low-Calorie",
+    imageAsset: "assets/VegetableLasagna.jpg",
+  ),
+  Recipe(
+    name: "Vegetarian Lasagna",
+    cuisine: "Italian",
+    type: "Vegetarian",
+    goal: "Low-Carb",
+    imageAsset: "assets/VegetableLasagna.jpg",
+  ),
+
+  Recipe(
+    name: "Margherita Pizza",
+    cuisine: "Italian",
+    type: "Vegetarian",
+    goal: "Weight Loss",
+    imageAsset: "assets/pizza.jpg",
   ),
   Recipe(
     name: "Margherita Pizza",
     cuisine: "Italian",
     type: "Vegetarian",
-    imageAsset: "assets/pizza.jpg", // Image from assets folder
+    goal: "Muscle Gain",
+    imageAsset: "assets/pizza.jpg",
+  ),
+  Recipe(
+    name: "Margherita Pizza",
+    cuisine: "Italian",
+    type: "Vegetarian",
+    goal: "Maintenance",
+    imageAsset: "assets/pizza.jpg",
+  ),
+  Recipe(
+    name: "Margherita Pizza",
+    cuisine: "Italian",
+    type: "Vegetarian",
+    goal: "Balanced",
+    imageAsset: "assets/pizza.jpg",
+  ),
+  Recipe(
+    name: "Margherita Pizza",
+    cuisine: "Italian",
+    type: "Vegetarian",
+    goal: "Low-Calorie",
+    imageAsset: "assets/pizza.jpg",
+  ),
+  Recipe(
+    name: "Margherita Pizza",
+    cuisine: "Italian",
+    type: "Vegetarian",
+    goal: "Low-Carb",
+    imageAsset: "assets/pizza.jpg",
   ),
 
   // Chinese Recipes
@@ -40,19 +152,129 @@ final List<Recipe> recipes = [
     name: "Vegetable Stir Fry",
     cuisine: "Chinese",
     type: "Vegetarian",
-    imageAsset: "assets/Vegetablefry.jpg", // Image from assets folder
+    goal: "Weight Loss",
+    imageAsset: "assets/Vegetablefry.jpg",
+  ),
+  Recipe(
+    name: "Vegetable Stir Fry",
+    cuisine: "Chinese",
+    type: "Vegetarian",
+    goal: "Muscle Gain",
+    imageAsset: "assets/Vegetablefry.jpg",
+  ),
+  Recipe(
+    name: "Vegetable Stir Fry",
+    cuisine: "Chinese",
+    type: "Vegetarian",
+    goal: "Maintenance",
+    imageAsset: "assets/Vegetablefry.jpg",
+  ),
+  Recipe(
+    name: "Vegetable Stir Fry",
+    cuisine: "Chinese",
+    type: "Vegetarian",
+    goal: "Balanced",
+    imageAsset: "assets/Vegetablefry.jpg",
+  ),
+  Recipe(
+    name: "Vegetable Stir Fry",
+    cuisine: "Chinese",
+    type: "Vegetarian",
+    goal: "Low-Calorie",
+    imageAsset: "assets/Vegetablefry.jpg",
+  ),
+  Recipe(
+    name: "Vegetable Stir Fry",
+    cuisine: "Chinese",
+    type: "Vegetarian",
+    goal: "Low-Carb",
+    imageAsset: "assets/Vegetablefry.jpg",
+  ),
+
+  Recipe(
+    name: "Kung Pao Chicken",
+    cuisine: "Chinese",
+    type: "Non-Vegetarian",
+    goal: "Weight Loss",
+    imageAsset: "assets/kungpao.jpg",
   ),
   Recipe(
     name: "Kung Pao Chicken",
     cuisine: "Chinese",
     type: "Non-Vegetarian",
-    imageAsset: "assets/kungpao.jpg", // Image from assets folder
+    goal: "Muscle Gain",
+    imageAsset: "assets/kungpao.jpg",
+  ),
+  Recipe(
+    name: "Kung Pao Chicken",
+    cuisine: "Chinese",
+    type: "Non-Vegetarian",
+    goal: "Maintenance",
+    imageAsset: "assets/kungpao.jpg",
+  ),
+  Recipe(
+    name: "Kung Pao Chicken",
+    cuisine: "Chinese",
+    type: "Non-Vegetarian",
+    goal: "Balanced",
+    imageAsset: "assets/kungpao.jpg",
+  ),
+  Recipe(
+    name: "Kung Pao Chicken",
+    cuisine: "Chinese",
+    type: "Non-Vegetarian",
+    goal: "Low-Calorie",
+    imageAsset: "assets/kungpao.jpg",
+  ),
+  Recipe(
+    name: "Kung Pao Chicken",
+    cuisine: "Chinese",
+    type: "Non-Vegetarian",
+    goal: "Low-Carb",
+    imageAsset: "assets/kungpao.jpg",
+  ),
+
+  Recipe(
+    name: "Sweet and Sour Pork",
+    cuisine: "Chinese",
+    type: "Non-Vegetarian",
+    goal: "Weight Loss",
+    imageAsset: "assets/Sweet.jpg",
   ),
   Recipe(
     name: "Sweet and Sour Pork",
     cuisine: "Chinese",
     type: "Non-Vegetarian",
-    imageAsset: "assets/Sweet.jpg", // Image from assets folder
+    goal: "Muscle Gain",
+    imageAsset: "assets/Sweet.jpg",
+  ),
+  Recipe(
+    name: "Sweet and Sour Pork",
+    cuisine: "Chinese",
+    type: "Non-Vegetarian",
+    goal: "Maintenance",
+    imageAsset: "assets/Sweet.jpg",
+  ),
+  Recipe(
+    name: "Sweet and Sour Pork",
+    cuisine: "Chinese",
+    type: "Non-Vegetarian",
+    goal: "Balanced",
+    imageAsset: "assets/Sweet.jpg",
+  ),
+  Recipe(
+    name: "Sweet and Sour Pork",
+    cuisine: "Chinese",
+    type: "Non-Vegetarian",
+    goal: "Low-Calorie",
+    imageAsset: "assets/Sweet.jpg",
+  ),
+  Recipe(
+    name: "Sweet and Sour Pork",
+    cuisine: "Chinese",
+    type: "Non-Vegetarian",
+    goal: "Low-Carb",
+    imageAsset: "assets/Sweet.jpg",
   ),
 
   // Indian Recipes
@@ -60,19 +282,129 @@ final List<Recipe> recipes = [
     name: "Paneer Butter Masala",
     cuisine: "Indian",
     type: "Vegetarian",
-    imageAsset: "assets/Masala.jpg", // Image from assets folder
+    goal: "Weight Loss",
+    imageAsset: "assets/Masala.jpg",
+  ),
+  Recipe(
+    name: "Paneer Butter Masala",
+    cuisine: "Indian",
+    type: "Vegetarian",
+    goal: "Muscle Gain",
+    imageAsset: "assets/Masala.jpg",
+  ),
+  Recipe(
+    name: "Paneer Butter Masala",
+    cuisine: "Indian",
+    type: "Vegetarian",
+    goal: "Maintenance",
+    imageAsset: "assets/Masala.jpg",
+  ),
+  Recipe(
+    name: "Paneer Butter Masala",
+    cuisine: "Indian",
+    type: "Vegetarian",
+    goal: "Balanced",
+    imageAsset: "assets/Masala.jpg",
+  ),
+  Recipe(
+    name: "Paneer Butter Masala",
+    cuisine: "Indian",
+    type: "Vegetarian",
+    goal: "Low-Calorie",
+    imageAsset: "assets/Masala.jpg",
+  ),
+  Recipe(
+    name: "Paneer Butter Masala",
+    cuisine: "Indian",
+    type: "Vegetarian",
+    goal: "Low-Carb",
+    imageAsset: "assets/Masala.jpg",
+  ),
+
+  Recipe(
+    name: "Chicken Tikka Masala",
+    cuisine: "Indian",
+    type: "Non-Vegetarian",
+    goal: "Weight Loss",
+    imageAsset: "assets/tikka.jpg",
   ),
   Recipe(
     name: "Chicken Tikka Masala",
     cuisine: "Indian",
     type: "Non-Vegetarian",
-    imageAsset: "assets/tikka.jpg", // Image from assets folder
+    goal: "Muscle Gain",
+    imageAsset: "assets/tikka.jpg",
+  ),
+  Recipe(
+    name: "Chicken Tikka Masala",
+    cuisine: "Indian",
+    type: "Non-Vegetarian",
+    goal: "Maintenance",
+    imageAsset: "assets/tikka.jpg",
+  ),
+  Recipe(
+    name: "Chicken Tikka Masala",
+    cuisine: "Indian",
+    type: "Non-Vegetarian",
+    goal: "Balanced",
+    imageAsset: "assets/tikka.jpg",
+  ),
+  Recipe(
+    name: "Chicken Tikka Masala",
+    cuisine: "Indian",
+    type: "Non-Vegetarian",
+    goal: "Low-Calorie",
+    imageAsset: "assets/tikka.jpg",
+  ),
+  Recipe(
+    name: "Chicken Tikka Masala",
+    cuisine: "Indian",
+    type: "Non-Vegetarian",
+    goal: "Low-Carb",
+    imageAsset: "assets/tikka.jpg",
+  ),
+
+  Recipe(
+    name: "Dal Tadka",
+    cuisine: "Indian",
+    type: "Vegan",
+    goal: "Weight Loss",
+    imageAsset: "assets/Dal.jpg",
   ),
   Recipe(
     name: "Dal Tadka",
     cuisine: "Indian",
     type: "Vegan",
-    imageAsset: "assets/Dal.jpg", // Image from assets folder
+    goal: "Muscle Gain",
+    imageAsset: "assets/Dal.jpg",
+  ),
+  Recipe(
+    name: "Dal Tadka",
+    cuisine: "Indian",
+    type: "Vegan",
+    goal: "Maintenance",
+    imageAsset: "assets/Dal.jpg",
+  ),
+  Recipe(
+    name: "Dal Tadka",
+    cuisine: "Indian",
+    type: "Vegan",
+    goal: "Balanced",
+    imageAsset: "assets/Dal.jpg",
+  ),
+  Recipe(
+    name: "Dal Tadka",
+    cuisine: "Indian",
+    type: "Vegan",
+    goal: "Low-Calorie",
+    imageAsset: "assets/Dal.jpg",
+  ),
+  Recipe(
+    name: "Dal Tadka",
+    cuisine: "Indian",
+    type: "Vegan",
+    goal: "Low-Carb",
+    imageAsset: "assets/Dal.jpg",
   ),
 
   // Mexican Recipes
@@ -80,19 +412,129 @@ final List<Recipe> recipes = [
     name: "Tacos",
     cuisine: "Mexican",
     type: "Non-Vegetarian",
-    imageAsset: "assets/Tacos.jpg", // Image from assets folder
+    goal: "Weight Loss",
+    imageAsset: "assets/Tacos.jpg",
+  ),
+  Recipe(
+    name: "Tacos",
+    cuisine: "Mexican",
+    type: "Non-Vegetarian",
+    goal: "Muscle Gain",
+    imageAsset: "assets/Tacos.jpg",
+  ),
+  Recipe(
+    name: "Tacos",
+    cuisine: "Mexican",
+    type: "Non-Vegetarian",
+    goal: "Maintenance",
+    imageAsset: "assets/Tacos.jpg",
+  ),
+  Recipe(
+    name: "Tacos",
+    cuisine: "Mexican",
+    type: "Non-Vegetarian",
+    goal: "Balanced",
+    imageAsset: "assets/Tacos.jpg",
+  ),
+  Recipe(
+    name: "Tacos",
+    cuisine: "Mexican",
+    type: "Non-Vegetarian",
+    goal: "Low-Calorie",
+    imageAsset: "assets/Tacos.jpg",
+  ),
+  Recipe(
+    name: "Tacos",
+    cuisine: "Mexican",
+    type: "Non-Vegetarian",
+    goal: "Low-Carb",
+    imageAsset: "assets/Tacos.jpg",
+  ),
+
+  Recipe(
+    name: "Vegetarian Quesadilla",
+    cuisine: "Mexican",
+    type: "Vegetarian",
+    goal: "Weight Loss",
+    imageAsset: "assets/Quesadillas.jpg",
   ),
   Recipe(
     name: "Vegetarian Quesadilla",
     cuisine: "Mexican",
     type: "Vegetarian",
-    imageAsset: "assets/Quesadillas.jpg", // Image from assets folder
+    goal: "Muscle Gain",
+    imageAsset: "assets/Quesadillas.jpg",
+  ),
+  Recipe(
+    name: "Vegetarian Quesadilla",
+    cuisine: "Mexican",
+    type: "Vegetarian",
+    goal: "Maintenance",
+    imageAsset: "assets/Quesadillas.jpg",
+  ),
+  Recipe(
+    name: "Vegetarian Quesadilla",
+    cuisine: "Mexican",
+    type: "Vegetarian",
+    goal: "Balanced",
+    imageAsset: "assets/Quesadillas.jpg",
+  ),
+  Recipe(
+    name: "Vegetarian Quesadilla",
+    cuisine: "Mexican",
+    type: "Vegetarian",
+    goal: "Low-Calorie",
+    imageAsset: "assets/Quesadillas.jpg",
+  ),
+  Recipe(
+    name: "Vegetarian Quesadilla",
+    cuisine: "Mexican",
+    type: "Vegetarian",
+    goal: "Low-Carb",
+    imageAsset: "assets/Quesadillas.jpg",
+  ),
+
+  Recipe(
+    name: "Guacamole with Tortilla Chips",
+    cuisine: "Mexican",
+    type: "Vegan",
+    goal: "Weight Loss",
+    imageAsset: "assets/Guacamole.jpg",
   ),
   Recipe(
     name: "Guacamole with Tortilla Chips",
     cuisine: "Mexican",
     type: "Vegan",
-    imageAsset: "assets/Guacamole.jpg", // Image from assets folder
+    goal: "Muscle Gain",
+    imageAsset: "assets/Guacamole.jpg",
+  ),
+  Recipe(
+    name: "Guacamole with Tortilla Chips",
+    cuisine: "Mexican",
+    type: "Vegan",
+    goal: "Maintenance",
+    imageAsset: "assets/Guacamole.jpg",
+  ),
+  Recipe(
+    name: "Guacamole with Tortilla Chips",
+    cuisine: "Mexican",
+    type: "Vegan",
+    goal: "Balanced",
+    imageAsset: "assets/Guacamole.jpg",
+  ),
+  Recipe(
+    name: "Guacamole with Tortilla Chips",
+    cuisine: "Mexican",
+    type: "Vegan",
+    goal: "Low-Calorie",
+    imageAsset: "assets/Guacamole.jpg",
+  ),
+  Recipe(
+    name: "Guacamole with Tortilla Chips",
+    cuisine: "Mexican",
+    type: "Vegan",
+    goal: "Low-Carb",
+    imageAsset: "assets/Guacamole.jpg",
   ),
 
   // American Recipes
@@ -100,12 +542,85 @@ final List<Recipe> recipes = [
     name: "Vegan Burger",
     cuisine: "American",
     type: "Vegan",
-    imageAsset: "assets/vegan.jpg", // Image from assets folder
+    goal: "Weight Loss",
+    imageAsset: "assets/vegan.jpg",
+  ),
+  Recipe(
+    name: "Vegan Burger",
+    cuisine: "American",
+    type: "Vegan",
+    goal: "Muscle Gain",
+    imageAsset: "assets/vegan.jpg",
+  ),
+  Recipe(
+    name: "Vegan Burger",
+    cuisine: "American",
+    type: "Vegan",
+    goal: "Maintenance",
+    imageAsset: "assets/vegan.jpg",
+  ),
+  Recipe(
+    name: "Vegan Burger",
+    cuisine: "American",
+    type: "Vegan",
+    goal: "Balanced",
+    imageAsset: "assets/vegan.jpg",
+  ),
+  Recipe(
+    name: "Vegan Burger",
+    cuisine: "American",
+    type: "Vegan",
+    goal: "Low-Calorie",
+    imageAsset: "assets/vegan.jpg",
+  ),
+  Recipe(
+    name: "Vegan Burger",
+    cuisine: "American",
+    type: "Vegan",
+    goal: "Low-Carb",
+    imageAsset: "assets/vegan.jpg",
+  ),
+
+  Recipe(
+    name: "Classic Cheeseburger",
+    cuisine: "American",
+    type: "Non-Vegetarian",
+    goal: "Weight Loss",
+    imageAsset: "assets/cheeseburger.jpg",
   ),
   Recipe(
     name: "Classic Cheeseburger",
     cuisine: "American",
     type: "Non-Vegetarian",
-    imageAsset: "assets/cheeseburger.jpg", // Image from assets folder
+    goal: "Muscle Gain",
+    imageAsset: "assets/cheeseburger.jpg",
+  ),
+  Recipe(
+    name: "Classic Cheeseburger",
+    cuisine: "American",
+    type: "Non-Vegetarian",
+    goal: "Maintenance",
+    imageAsset: "assets/cheeseburger.jpg",
+  ),
+  Recipe(
+    name: "Classic Cheeseburger",
+    cuisine: "American",
+    type: "Non-Vegetarian",
+    goal: "Balanced",
+    imageAsset: "assets/cheeseburger.jpg",
+  ),
+  Recipe(
+    name: "Classic Cheeseburger",
+    cuisine: "American",
+    type: "Non-Vegetarian",
+    goal: "Low-Calorie",
+    imageAsset: "assets/cheeseburger.jpg",
+  ),
+  Recipe(
+    name: "Classic Cheeseburger",
+    cuisine: "American",
+    type: "Non-Vegetarian",
+    goal: "Low-Carb",
+    imageAsset: "assets/cheeseburger.jpg",
   ),
 ];

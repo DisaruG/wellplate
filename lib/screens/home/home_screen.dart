@@ -104,8 +104,7 @@ class HomeScreenState extends State<HomeScreen> {
                 onCuisinePressed: () {
                   _showBottomSheet(context, 'Cuisine', const [
                     'Italian', 'Chinese', 'Indian', 'Japanese', 'Mexican', 'French',
-                    'Thai', 'American', 'Mediterranean', 'Spanish', 'Korean',
-                    'Vietnamese', 'Brazilian', 'Caribbean', 'Greek'
+                    'Thai', 'American'
                   ], (selected) {
                     _updateSelection('Cuisine', selected);
                   });
