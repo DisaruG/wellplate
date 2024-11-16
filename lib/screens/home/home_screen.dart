@@ -3,6 +3,7 @@ import 'package:wellplate/widgets/app_bar_widget.dart';
 import 'package:wellplate/widgets/bottom_nav_bar_widget.dart';
 import 'package:wellplate/widgets/daily_tip_card.dart'; // Import DailyTipCard
 import 'package:wellplate/providers/health_tip_provider.dart'; // Import HealthTipProvider
+import 'package:wellplate/widgets/recipe_input_buttons.dart'; // Import the RecipeInputButtons widget
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -66,9 +67,25 @@ class HomeScreenState extends State<HomeScreen> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              // Add the DailyTipCard with a randomly selected tip
+              // Daily Health Tip
               DailyTipCard(tip: randomTip),
-              // Your other content goes here...
+              const SizedBox(height: 16),
+              // Recipe Input Buttons
+              RecipeInputButtons(
+                onCuisinePressed: () {
+                  // Handle Cuisine button press
+                },
+                onTypePressed: () {
+                  // Handle Type button press
+                },
+                onGoalPressed: () {
+                  // Handle Goal button press
+                },
+                onFilterPressed: () {
+                  // Handle Filter Recipes button press
+                },
+              ),
+              // Additional content can go here...
             ],
           ),
         ),
