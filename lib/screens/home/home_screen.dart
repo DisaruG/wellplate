@@ -194,27 +194,26 @@ class HomeScreenState extends State<HomeScreen> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true, // Ensures full height for Cupertino picker
+      backgroundColor:
+      isDarkMode ? Colors.grey[850] : Colors.white, // Dynamic background
       builder: (BuildContext context) {
         return SizedBox(
-          height: 250, // Fixed height for the picker
+          height: 300, // Fixed height for the picker
           child: Column(
             children: [
               // Header with Done button
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  border: const Border(
-                    bottom: BorderSide(color: Colors.grey, width: 1),
-                  ),
-                ),
+                color: isDarkMode ? Colors.grey[900] : Colors.grey[200],
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       'Select $type',
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: isDarkMode ? Colors.white : Colors.black),
                     ),
                     TextButton(
                       onPressed: () {
@@ -233,13 +232,21 @@ class HomeScreenState extends State<HomeScreen> {
                 child: CupertinoPicker(
                   scrollController:
                   FixedExtentScrollController(initialItem: selectedIndex),
-                  itemExtent: 32.0, // Height of each item
+                  itemExtent: 40.0, // Height of each item
+                  backgroundColor:
+                  isDarkMode ? Colors.grey[850] : Colors.white, // Dynamic
                   onSelectedItemChanged: (int index) {
                     selectedIndex = index;
                   },
                   children: items
-                      .map((item) => Text(item,
-                      style: const TextStyle(fontSize: 18)))
+                      .map(
+                        (item) => Text(
+                      item,
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: isDarkMode ? Colors.white : Colors.black),
+                    ),
+                  )
                       .toList(),
                 ),
               ),
