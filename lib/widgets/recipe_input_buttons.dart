@@ -8,6 +8,9 @@ class RecipeInputButtons extends StatelessWidget {
   final Function onTypePressed;
   final Function onGoalPressed;
   final VoidCallback onFilterPressed;
+  final String? selectedCuisine;
+  final String? selectedType;
+  final String? selectedGoal;
 
   const RecipeInputButtons({
     super.key,
@@ -18,6 +21,9 @@ class RecipeInputButtons extends StatelessWidget {
     required this.onTypePressed,
     required this.onGoalPressed,
     required this.onFilterPressed,
+    this.selectedCuisine,
+    this.selectedType,
+    this.selectedGoal,
   });
 
   @override
@@ -26,58 +32,54 @@ class RecipeInputButtons extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Column(
         children: [
-          // Row for Cuisine, Type, and Goal Buttons (side by side)
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               // Cuisine Button
               Expanded(
                 child: ElevatedButton(
-                  onPressed: () => onCuisinePressed(), // Invoke the callback
+                  onPressed: () => onCuisinePressed(),
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 12.0),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  child: const Text("Cuisine"),
+                  child: Text(selectedCuisine ?? "Cuisine"), // Display selected value
                 ),
               ),
-              const SizedBox(width: 8), // Space between buttons
-
+              const SizedBox(width: 8),
               // Type Button
               Expanded(
                 child: ElevatedButton(
-                  onPressed: () => onTypePressed(), // Invoke the callback
+                  onPressed: () => onTypePressed(),
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 12.0),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  child: const Text("Type"),
+                  child: Text(selectedType ?? "Type"), // Display selected value
                 ),
               ),
-              const SizedBox(width: 8), // Space between buttons
-
+              const SizedBox(width: 8),
               // Goal Button
               Expanded(
                 child: ElevatedButton(
-                  onPressed: () => onGoalPressed(), // Invoke the callback
+                  onPressed: () => onGoalPressed(),
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 12.0),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  child: const Text("Goal"),
+                  child: Text(selectedGoal ?? "Goal"), // Display selected value
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 12), // Space between row and Filter button
-
-          // Filter Button (Blue color)
+          const SizedBox(height: 12),
+          // Filter Button
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
