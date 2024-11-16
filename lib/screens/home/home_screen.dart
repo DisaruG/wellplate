@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wellplate/widgets/app_bar_widget.dart';
 import 'package:wellplate/widgets/bottom_nav_bar_widget.dart';
-import 'package:wellplate/widgets/daily_tip_card.dart'; // Import DailyTipCard
-import 'package:wellplate/providers/health_tip_provider.dart'; // Import HealthTipProvider
-import 'package:wellplate/widgets/recipe_input_buttons.dart'; // Import RecipeInputButtons widget
+import 'package:wellplate/widgets/daily_tip_card.dart';
+import 'package:wellplate/providers/health_tip_provider.dart';
+import 'package:wellplate/widgets/recipe_input_buttons.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,8 +16,8 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
   bool isDarkMode = false;
   int _currentIndex = 0;
-  String randomTip = ""; // Store the randomly selected health tip
-  final HealthTipProvider healthTipProvider = HealthTipProvider(); // Instance of the provider
+  String randomTip = "";
+  final HealthTipProvider healthTipProvider = HealthTipProvider();
 
   String? selectedCuisine;
   String? selectedType;
@@ -84,89 +84,43 @@ class HomeScreenState extends State<HomeScreen> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              // Daily Health Tip
               DailyTipCard(tip: randomTip),
               const SizedBox(height: 16),
-              // Recipe Input Buttons
               RecipeInputButtons(
                 cuisines: const [
-                  'Italian',
-                  'Chinese',
-                  'Indian',
-                  'Japanese',
-                  'Mexican',
-                  'French',
-                  'Thai',
-                  'American',
-                  'Mediterranean',
-                  'Spanish',
-                  'Korean',
-                  'Vietnamese',
-                  'Brazilian',
-                  'Caribbean',
-                  'Greek'
-                ], // Example cuisines
+                  'Italian', 'Chinese', 'Indian', 'Japanese', 'Mexican', 'French',
+                  'Thai', 'American', 'Mediterranean', 'Spanish', 'Korean',
+                  'Vietnamese', 'Brazilian', 'Caribbean', 'Greek'
+                ],
                 types: const [
-                  'Vegetarian',
-                  'Non-Vegetarian',
-                  'Vegan',
-                  'Keto',
-                  'Low-Carb',
-                  'High-Protein',
-                  'Gluten-Free'
-                ], // Example types
+                  'Vegetarian', 'Non-Vegetarian', 'Vegan', 'Keto', 'Low-Carb',
+                  'High-Protein', 'Gluten-Free'
+                ],
                 goals: const [
-                  'Weight Loss',
-                  'Muscle Gain',
-                  'Maintenance',
-                  'Balanced Nutrition',
-                  'Weight Maintenance',
-                  'Low-Calorie',
-                  'Low-Carb'
-                ], // Example goals
+                  'Weight Loss', 'Muscle Gain', 'Maintenance', 'Balanced Nutrition',
+                  'Weight Maintenance', 'Low-Calorie', 'Low-Carb'
+                ],
                 onCuisinePressed: () {
                   _showBottomSheet(context, 'Cuisine', const [
-                    'Italian',
-                    'Chinese',
-                    'Indian',
-                    'Japanese',
-                    'Mexican',
-                    'French',
-                    'Thai',
-                    'American',
-                    'Mediterranean',
-                    'Spanish',
-                    'Korean',
-                    'Vietnamese',
-                    'Brazilian',
-                    'Caribbean',
-                    'Greek'
+                    'Italian', 'Chinese', 'Indian', 'Japanese', 'Mexican', 'French',
+                    'Thai', 'American', 'Mediterranean', 'Spanish', 'Korean',
+                    'Vietnamese', 'Brazilian', 'Caribbean', 'Greek'
                   ], (selected) {
                     _updateSelection('Cuisine', selected);
                   });
                 },
                 onTypePressed: () {
                   _showBottomSheet(context, 'Type', const [
-                    'Vegetarian',
-                    'Non-Vegetarian',
-                    'Vegan',
-                    'Keto',
-                    'Low-Carb',
-                    'High-Protein',
-                    'Gluten-Free'
+                    'Vegetarian', 'Non-Vegetarian', 'Vegan', 'Keto', 'Low-Carb',
+                    'High-Protein', 'Gluten-Free'
                   ], (selected) {
                     _updateSelection('Type', selected);
                   });
                 },
                 onGoalPressed: () {
                   _showBottomSheet(context, 'Goal', const [
-                    'Weight Loss',
-                    'Muscle Gain',
-                    'Maintenance',
-                    'Balanced Nutrition',
-                    'Weight Maintenance',
-                    'Low-Calorie',
-                    'Low-Carb'
+                    'Weight Loss', 'Muscle Gain', 'Maintenance', 'Balanced',
+                    'Low-Calorie', 'Low-Carb'
                   ], (selected) {
                     _updateSelection('Goal', selected);
                   });
@@ -174,6 +128,9 @@ class HomeScreenState extends State<HomeScreen> {
                 onFilterPressed: () {
                   // Handle Filter button press logic
                 },
+                selectedCuisine: selectedCuisine,
+                selectedType: selectedType,
+                selectedGoal: selectedGoal,
               ),
             ],
           ),
@@ -186,22 +143,20 @@ class HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // Show Bottom Sheet with CupertinoPicker for iOS-style scrolling
+  // Show Bottom Sheet with CupertinoPicker
   void _showBottomSheet(BuildContext context, String type, List<String> items,
       ValueChanged<String> onItemSelected) {
     int selectedIndex = 0;
 
     showModalBottomSheet(
       context: context,
-      isScrollControlled: true, // Ensures full height for Cupertino picker
-      backgroundColor:
-      isDarkMode ? Colors.grey[850] : Colors.white, // Dynamic background
+      isScrollControlled: true,
+      backgroundColor: isDarkMode ? Colors.grey[850] : Colors.white,
       builder: (BuildContext context) {
         return SizedBox(
-          height: 300, // Fixed height for the picker
+          height: 300,
           child: Column(
             children: [
-              // Header with Done button and rounded corners
               ClipRRect(
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
                 child: Container(
@@ -221,7 +176,7 @@ class HomeScreenState extends State<HomeScreen> {
                       TextButton(
                         onPressed: () {
                           onItemSelected(items[selectedIndex]);
-                          Navigator.pop(context); // Close the modal
+                          Navigator.pop(context);
                         },
                         child: const Text(
                           'Done',
@@ -234,28 +189,23 @@ class HomeScreenState extends State<HomeScreen> {
               ),
               Expanded(
                 child: CupertinoPicker(
-                  scrollController:
-                  FixedExtentScrollController(initialItem: selectedIndex),
-                  itemExtent: 40.0, // Height of each item
-                  backgroundColor:
-                  isDarkMode ? Colors.grey[850] : Colors.white, // Dynamic
+                  scrollController: FixedExtentScrollController(initialItem: selectedIndex),
+                  itemExtent: 40.0,
+                  backgroundColor: isDarkMode ? Colors.grey[850] : Colors.white,
                   onSelectedItemChanged: (int index) {
                     selectedIndex = index;
                   },
                   children: items
-                      .map(
-                        (item) => Center(
-                      child: Text(
-                        item,
-                        style: TextStyle(
-                          fontSize: 18,
-                          color:
-                          isDarkMode ? Colors.white : Colors.black,
-                        ),
-                        textAlign: TextAlign.center, // Center the text
+                      .map((item) => Center(
+                    child: Text(
+                      item,
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: isDarkMode ? Colors.white : Colors.black,
                       ),
+                      textAlign: TextAlign.center,
                     ),
-                  )
+                  ))
                       .toList(),
                 ),
               ),
