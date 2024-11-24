@@ -45,7 +45,7 @@ class RecipeInputButtons extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  child: Text(selectedCuisine ?? "Cuisine"), // Display selected value
+                  child: Text(selectedCuisine ?? "Cuisine"), // Display selected value or default text
                 ),
               ),
               const SizedBox(width: 8),
@@ -59,7 +59,7 @@ class RecipeInputButtons extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  child: Text(selectedType ?? "Type"), // Display selected value
+                  child: Text(selectedType ?? "Type"), // Display selected value or default text
                 ),
               ),
               const SizedBox(width: 8),
@@ -73,7 +73,7 @@ class RecipeInputButtons extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  child: Text(selectedGoal ?? "Goal"), // Display selected value
+                  child: Text(selectedGoal ?? "Goal"), // Display selected value or default text
                 ),
               ),
             ],
