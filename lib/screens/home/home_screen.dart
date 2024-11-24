@@ -149,6 +149,7 @@ class HomeScreenState extends State<HomeScreen> {
                       ),
                       TextButton(
                         onPressed: () {
+                          // Pass the selected item here
                           onItemSelected(items[selectedIndex]);
                           Navigator.pop(context);
                         },
@@ -205,83 +206,65 @@ class HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        brightness: Brightness.light,
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-          iconTheme: IconThemeData(color: Colors.black),
-          titleTextStyle: TextStyle(color: Colors.black, fontSize: 20),
-        ),
+    return Scaffold(
+      appBar: CustomAppBar(
+        isDarkMode: isDarkMode,
+        toggleTheme: toggleTheme,
       ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        appBarTheme: AppBarTheme(
-          backgroundColor: Colors.grey[900],
-          foregroundColor: Colors.white,
-          iconTheme: const IconThemeData(color: Colors.white),
-          titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
-        ),
-      ),
-      themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
-      home: Scaffold(
-        appBar: CustomAppBar(
-          isDarkMode: isDarkMode,
-          toggleTheme: toggleTheme,
-        ),
-        body: SingleChildScrollView(
-          controller: _scrollController,
-          child: Column(
-            children: [
-              DailyTipCard(tip: randomTip),
-              const SizedBox(height: 16),
-              RecipeInputButtons(
-                cuisines: const [
+      body: SingleChildScrollView(
+        controller: _scrollController,
+        child: Column(
+          children: [
+            DailyTipCard(tip: randomTip),
+            const SizedBox(height: 16),
+            RecipeInputButtons(
+              cuisines: const [
+                'Italian', 'Chinese', 'Indian', 'Japanese', 'Mexican', 'French',
+                'Thai', 'American'
+              ],
+              types: const [
+                'Vegetarian', 'Non-Vegetarian', 'Vegan', 'Keto', 'Low-Carb',
+                'High-Protein', 'Gluten-Free'
+              ],
+              goals: const [
+                'Weight Loss', 'Muscle Gain', 'Maintenance', 'Balanced Nutrition',
+                'Weight Maintenance', 'Low-Calorie', 'Low-Carb'
+              ],
+              selectedCuisine: selectedCuisine,
+              selectedType: selectedType,
+              selectedGoal: selectedGoal,
+              onCuisinePressed: () {
+                _showBottomSheet(context, 'Cuisine', const [
                   'Italian', 'Chinese', 'Indian', 'Japanese', 'Mexican', 'French',
                   'Thai', 'American'
-                ],
-                types: const [
+                ], (selected) {
+                  _updateSelection('Cuisine', selected);  // Update selected cuisine
+                });
+              },
+              onTypePressed: () {
+                _showBottomSheet(context, 'Type', const [
                   'Vegetarian', 'Non-Vegetarian', 'Vegan', 'Keto', 'Low-Carb',
                   'High-Protein', 'Gluten-Free'
-                ],
-                goals: const [
+                ], (selected) {
+                  _updateSelection('Type', selected);  // Update selected type
+                });
+              },
+              onGoalPressed: () {
+                _showBottomSheet(context, 'Goal', const [
                   'Weight Loss', 'Muscle Gain', 'Maintenance', 'Balanced Nutrition',
                   'Weight Maintenance', 'Low-Calorie', 'Low-Carb'
-                ],
-                onCuisinePressed: () {
-                  _showBottomSheet(context, 'Cuisine', const [
-                    'Italian', 'Chinese', 'Indian', 'Japanese', 'Mexican', 'French',
-                    'Thai', 'American'
-                  ], (selected) {
-                    _updateSelection('Cuisine', selected);
-                  });
-                },
-                onTypePressed: () {
-                  _showBottomSheet(context, 'Type', const [
-                    'Vegetarian', 'Non-Vegetarian', 'Vegan', 'Keto', 'Low-Carb',
-                    'High-Protein', 'Gluten-Free'
-                  ], (selected) {
-                    _updateSelection('Type', selected);
-                  });
-                },
-                onGoalPressed: () {
-                  _showBottomSheet(context, 'Goal', const [
-                    'Weight Loss', 'Muscle Gain', 'Maintenance', 'Balanced Nutrition',
-                    'Weight Maintenance', 'Low-Calorie', 'Low-Carb'
-                  ], (selected) {
-                    _updateSelection('Goal', selected);
-                  });
-                },
-                onFilterPressed: _onFilterPressed,
-              ),
-              const SizedBox(height: 16),
-              _buildRecipeList(),
-            ],
-          ),
+                ], (selected) {
+                  _updateSelection('Goal', selected);  // Update selected goal
+                });
+              },
+              onFilterPressed: _onFilterPressed,
+            ),
+            const SizedBox(height: 16),
+            _buildRecipeList(),
+          ],
         ),
-        bottomNavigationBar: CustomBottomNavBar(currentIndex: _currentIndex, onTabSelected: onTabSelected),  // Pass the function
       ),
+      bottomNavigationBar: CustomBottomNavBar(currentIndex: _currentIndex, onTabSelected: onTabSelected),  // Pass the function
     );
   }
 }
