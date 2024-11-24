@@ -17,7 +17,7 @@ class HomeScreen extends StatefulWidget {
 
 class HomeScreenState extends State<HomeScreen> {
   bool isDarkMode = false;
-  int _currentIndex = 0;
+  int _currentIndex = 0;  // Track the current index of the bottom navigation bar
   String randomTip = "";
   final HealthTipProvider healthTipProvider = HealthTipProvider();
 
@@ -27,7 +27,7 @@ class HomeScreenState extends State<HomeScreen> {
   List<Recipe> filteredRecipeList = [];  // List to hold filtered recipes
 
   final ScrollController _scrollController = ScrollController();  // Marked as final
-  bool _isScrolling = false;  // Track scrolling state for visibility
+  // Track scrolling state for visibility
 
   @override
   void initState() {
@@ -38,7 +38,6 @@ class HomeScreenState extends State<HomeScreen> {
     _scrollController.addListener(() {
       setState(() {
         // Show the button if scrolled more than 200 pixels
-        _isScrolling = _scrollController.offset > 200;
       });
     });
   }
@@ -46,12 +45,6 @@ class HomeScreenState extends State<HomeScreen> {
   void toggleTheme() {
     setState(() {
       isDarkMode = !isDarkMode;
-    });
-  }
-
-  void _onTabSelected(int index) {
-    setState(() {
-      _currentIndex = index;
     });
   }
 
@@ -197,9 +190,15 @@ class HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  // Define the onTabSelected method to handle bottom navigation selection
+  void onTabSelected(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
   @override
   void dispose() {
-    // Remove the listener when the screen is disposed
     _scrollController.removeListener(() {});
     super.dispose();
   }
@@ -232,7 +231,7 @@ class HomeScreenState extends State<HomeScreen> {
           toggleTheme: toggleTheme,
         ),
         body: SingleChildScrollView(
-          controller: _scrollController,  // Add ScrollController
+          controller: _scrollController,
           child: Column(
             children: [
               DailyTipCard(tip: randomTip),
@@ -268,44 +267,21 @@ class HomeScreenState extends State<HomeScreen> {
                 },
                 onGoalPressed: () {
                   _showBottomSheet(context, 'Goal', const [
-                    'Weight Loss', 'Muscle Gain', 'Maintenance', 'Balanced',
-                    'Low-Calorie', 'Low-Carb'
+                    'Weight Loss', 'Muscle Gain', 'Maintenance', 'Balanced Nutrition',
+                    'Weight Maintenance', 'Low-Calorie', 'Low-Carb'
                   ], (selected) {
                     _updateSelection('Goal', selected);
                   });
                 },
-                onFilterPressed: _onFilterPressed,  // Hook up the filter button
-                selectedCuisine: selectedCuisine,
-                selectedType: selectedType,
-                selectedGoal: selectedGoal,
+                onFilterPressed: _onFilterPressed,
               ),
               const SizedBox(height: 16),
               _buildRecipeList(),
             ],
           ),
         ),
-        bottomNavigationBar: CustomBottomNavBar(
-          currentIndex: _currentIndex,
-          onTabSelected: _onTabSelected,
-        ),
-        floatingActionButton: Visibility(
-          visible: _isScrolling,  // Show the button based on scroll state
-          child: FloatingActionButton(
-            onPressed: () {
-              _scrollController.animateTo(
-                0,
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-              );
-            },
-            backgroundColor: Colors.blue,
-            child: const Icon(Icons.arrow_upward),
-          ),
-        ),
+        bottomNavigationBar: CustomBottomNavBar(currentIndex: _currentIndex, onTabSelected: onTabSelected),  // Pass the function
       ),
     );
   }
 }
-//hehe
-//huhu
-//hehe
