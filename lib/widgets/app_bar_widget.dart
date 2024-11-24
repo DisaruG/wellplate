@@ -1,34 +1,18 @@
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final bool isDarkMode;
-  final VoidCallback toggleTheme;
-
-  const CustomAppBar({
-    super.key,
-    required this.isDarkMode,
-    required this.toggleTheme,
-  });
+  const CustomAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
-      title: Text(
+      title: const Text(
         'Dashboard',
         style: TextStyle(
-          color: isDarkMode ? Colors.white : Colors.black, // Dynamically set text color
+          color: Colors.black, // Set a static color, no dark mode logic
         ),
       ),
-      actions: [
-        IconButton(
-          icon: Icon(
-            isDarkMode ? Icons.nightlight_round : Icons.wb_sunny,
-            color: isDarkMode ? Colors.white : Colors.black, // Dynamically set icon color
-          ),
-          onPressed: toggleTheme,
-        ),
-      ],
     );
   }
 
