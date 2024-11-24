@@ -16,7 +16,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
-  bool isDarkMode = false;
   int _currentIndex = 0;  // Track the current index of the bottom navigation bar
   String randomTip = "";
   final HealthTipProvider healthTipProvider = HealthTipProvider();
@@ -39,12 +38,6 @@ class HomeScreenState extends State<HomeScreen> {
       setState(() {
         // Show the button if scrolled more than 200 pixels
       });
-    });
-  }
-
-  void toggleTheme() {
-    setState(() {
-      isDarkMode = !isDarkMode;
     });
   }
 
@@ -125,7 +118,7 @@ class HomeScreenState extends State<HomeScreen> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: isDarkMode ? Colors.grey[850] : Colors.white,
+      backgroundColor: Colors.white,  // No need for dark mode
       builder: (BuildContext context) {
         return SizedBox(
           height: 300,
@@ -135,16 +128,16 @@ class HomeScreenState extends State<HomeScreen> {
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  color: isDarkMode ? Colors.grey[900] : Colors.grey[200],
+                  color: Colors.grey[200],  // Standard color, no dark mode
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         'Select $type',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
-                          color: isDarkMode ? Colors.white : Colors.black,
+                          color: Colors.black,  // No dark mode color
                         ),
                       ),
                       TextButton(
@@ -166,7 +159,7 @@ class HomeScreenState extends State<HomeScreen> {
                 child: CupertinoPicker(
                   scrollController: FixedExtentScrollController(initialItem: selectedIndex),
                   itemExtent: 40.0,
-                  backgroundColor: isDarkMode ? Colors.grey[850] : Colors.white,
+                  backgroundColor: Colors.white,  // No dark mode
                   onSelectedItemChanged: (int index) {
                     selectedIndex = index;
                   },
@@ -174,9 +167,9 @@ class HomeScreenState extends State<HomeScreen> {
                       .map((item) => Center(
                     child: Text(
                       item,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 18,
-                        color: isDarkMode ? Colors.white : Colors.black,
+                        color: Colors.black,  // No dark mode color
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -207,10 +200,7 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        isDarkMode: isDarkMode,
-        toggleTheme: toggleTheme,
-      ),
+      appBar: const CustomAppBar(),  // No need for isDarkMode or toggleTheme
       body: SingleChildScrollView(
         controller: _scrollController,
         child: Column(
