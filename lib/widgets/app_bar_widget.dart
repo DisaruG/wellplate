@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar({super.key});
+  final String title;  // Add a title parameter to make it dynamic
+
+  const CustomAppBar({super.key, required this.title});  // Constructor to accept title
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
-      title: const Text(
-        'Dashboard',
-        style: TextStyle(
-          color: Colors.black, // Set a static color, no dark mode logic
+      title: Text(
+        title,  // Use the dynamic title
+        style: const TextStyle(
+          color: Colors.black,  // Static color for the text
         ),
       ),
     );
