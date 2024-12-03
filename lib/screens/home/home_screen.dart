@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:wellplate/screens/calculator/calculator_screen.dart';
 import 'package:wellplate/widgets/app_bar_widget.dart';
-import 'package:wellplate/widgets/bottom_nav_bar_widget.dart';
+import 'package:wellplate/widgets/custom_nav_bar.dart';
 import 'package:wellplate/widgets/daily_tip_card.dart';
 import 'package:wellplate/providers/health_tip_provider.dart';
 import 'package:wellplate/widgets/recipe_input_buttons.dart';
 import 'package:wellplate/widgets/recipe_card_widget.dart';  // Import the RecipeCardWidget
 import 'package:wellplate/data/recipe_data.dart';  // Import recipe data
+import 'package:wellplate/screens/mealplanner/my_meal_screen.dart'; // Import other screens
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -199,9 +201,17 @@ class HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Set the AppBar title based on the current screen
+    String appBarTitle = _currentIndex == 0
+        ? 'Dashboard'
+        : _currentIndex == 1
+        ? 'Meal Planner'
+        : 'Calculator';
+
     return Scaffold(
-      appBar: const CustomAppBar(),  // No need for isDarkMode or toggleTheme
-      body: SingleChildScrollView(
+      appBar: CustomAppBar(title: appBarTitle),  // Pass the dynamic title
+      body: _currentIndex == 0
+          ? SingleChildScrollView(
         controller: _scrollController,
         child: Column(
           children: [
@@ -253,8 +263,14 @@ class HomeScreenState extends State<HomeScreen> {
             _buildRecipeList(),
           ],
         ),
+      )
+          : _currentIndex == 1
+          ? const MyMealsScreen() // Display the meal planner screen
+          : const MyCalculatorScreen(), // Display the meal builder screen
+      bottomNavigationBar: CustomBottomNavBar(
+        currentIndex: _currentIndex,
+        onTabSelected: onTabSelected,  // Pass the function to update the index
       ),
-      bottomNavigationBar: CustomBottomNavBar(currentIndex: _currentIndex, onTabSelected: onTabSelected),  // Pass the function
     );
   }
 }
