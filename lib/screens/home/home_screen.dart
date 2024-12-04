@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:wellplate/providers/recipe_filter_provider.dart';
 import 'package:wellplate/widgets/app_bar_widget.dart';
 import 'package:wellplate/widgets/daily_tip_card.dart';
 import 'package:wellplate/widgets/recipe_input_buttons.dart';
 import 'package:wellplate/widgets/recipe_card_widget.dart';
-import 'package:wellplate/data/recipe_data.dart'; // Ensure Recipe class is imported correctly
+import 'package:wellplate/data/recipe_data.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -60,7 +61,7 @@ class HomeScreenState extends State<HomeScreen> {
               selectedType: recipeFilterProvider.selectedType,
               selectedGoal: recipeFilterProvider.selectedGoal,
               onCuisinePressed: () {
-                _showBottomSheet(
+                _showCupertinoPicker(
                   context,
                   'Cuisine',
                   recipeFilterProvider.updateCuisine,
@@ -77,7 +78,7 @@ class HomeScreenState extends State<HomeScreen> {
                 );
               },
               onTypePressed: () {
-                _showBottomSheet(
+                _showCupertinoPicker(
                   context,
                   'Type',
                   recipeFilterProvider.updateType,
@@ -93,7 +94,7 @@ class HomeScreenState extends State<HomeScreen> {
                 );
               },
               onGoalPressed: () {
-                _showBottomSheet(
+                _showCupertinoPicker(
                   context,
                   'Goal',
                   recipeFilterProvider.updateGoal,
@@ -151,26 +152,59 @@ class HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _showBottomSheet(
+  void _showCupertinoPicker(
       BuildContext context,
       String filterType,
       Function(String) updateFilter,
       List<String> options,
       ) {
+    int selectedIndex = 0; // Track the currently selected index in the picker
+
     showModalBottomSheet(
       context: context,
       builder: (context) {
-        return ListView(
-          padding: const EdgeInsets.all(16),
-          children: options.map((option) {
-            return ListTile(
-              title: Text(option),
-              onTap: () {
-                updateFilter(option);
-                Navigator.pop(context);
-              },
-            );
-          }).toList(),
+        return SizedBox(
+          height: 300,
+          child: Column(
+            children: [
+              // Picker Title and Done Button
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                color: Colors.grey.shade200,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      filterType,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        // Apply the selected filter when "Done" is pressed
+                        updateFilter(options[selectedIndex]);
+                        Navigator.pop(context);
+                      },
+                      child: const Text('Done'),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: CupertinoPicker(
+                  itemExtent: 40, // Height of each item in the picker
+                  onSelectedItemChanged: (index) {
+                    selectedIndex = index;
+                  },
+                  children: options
+                      .map((option) => Center(child: Text(option)))
+                      .toList(),
+                ),
+              ),
+            ],
+          ),
         );
       },
     );
