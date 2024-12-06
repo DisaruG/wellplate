@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:wellplate/providers/recipe_filter_provider.dart';
 import 'package:wellplate/widgets/app_bar_widget.dart';
@@ -7,6 +6,11 @@ import 'package:wellplate/widgets/daily_tip_card.dart';
 import 'package:wellplate/widgets/recipe_input_buttons.dart';
 import 'package:wellplate/widgets/recipe_card_widget.dart';
 import 'package:wellplate/data/recipe_data.dart';
+import 'package:wellplate/screens/mealplanner/my_meal_screen.dart';
+import 'package:wellplate/screens/calculator/calculator_screen.dart';
+import 'package:wellplate/widgets/custom_nav_bar.dart';
+import 'package:flutter/cupertino.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,6 +20,35 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
+  int _currentIndex = 0; // Current index for bottom navigation
+
+  final List<Widget> _screens = [
+    const DashboardScreen(),
+    const MyMealsScreen(),
+    const MyCalculatorScreen(),
+  ];
+
+  void _onTabSelected(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _screens[_currentIndex], // Display the selected screen
+      bottomNavigationBar: CustomBottomNavBar(
+        currentIndex: _currentIndex,
+        onTabSelected: _onTabSelected,
+      ),
+    );
+  }
+}
+
+class DashboardScreen extends StatelessWidget {
+  const DashboardScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final recipeFilterProvider =
@@ -158,7 +191,7 @@ class HomeScreenState extends State<HomeScreen> {
       Function(String) updateFilter,
       List<String> options,
       ) {
-    int selectedIndex = 0; // Track the currently selected index in the picker
+    int selectedIndex = 0;
 
     showModalBottomSheet(
       context: context,
@@ -167,7 +200,6 @@ class HomeScreenState extends State<HomeScreen> {
           height: 300,
           child: Column(
             children: [
-              // Picker Title and Done Button
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 color: Colors.grey.shade200,
@@ -183,7 +215,6 @@ class HomeScreenState extends State<HomeScreen> {
                     ),
                     TextButton(
                       onPressed: () {
-                        // Apply the selected filter when "Done" is pressed
                         updateFilter(options[selectedIndex]);
                         Navigator.pop(context);
                       },
@@ -194,13 +225,11 @@ class HomeScreenState extends State<HomeScreen> {
               ),
               Expanded(
                 child: CupertinoPicker(
-                  itemExtent: 40, // Height of each item in the picker
+                  itemExtent: 40,
                   onSelectedItemChanged: (index) {
                     selectedIndex = index;
                   },
-                  children: options
-                      .map((option) => Center(child: Text(option)))
-                      .toList(),
+                  children: options.map((option) => Center(child: Text(option))).toList(),
                 ),
               ),
             ],
