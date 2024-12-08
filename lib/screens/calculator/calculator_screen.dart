@@ -7,7 +7,7 @@ class MyCalculatorScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('calculators'),
+        title: const Text('Calculators'),
         backgroundColor: Colors.blue,
       ),
       body: const Center(
