@@ -37,30 +37,39 @@ class _CreateMealContentState extends State<CreateMealContent> {
                   ),
                 ],
               ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: TextField(
-                        controller: _ingredientController,
-                        decoration: const InputDecoration(
-                          labelText: 'Enter Ingredient',
-                          border: InputBorder.none,
-                          hintText: 'E.g., Chicken, Tomatoes',
-                          focusedBorder: InputBorder.none,
-                        ),
-                      ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: TextField(
+                  controller: _ingredientController,
+                  decoration: const InputDecoration(
+                    labelText: 'Enter Ingredient',
+                    border: InputBorder.none,
+                    hintText: 'Chicken, Tomatoes',
+                    hintStyle: TextStyle(
+                      color: Color(0x80333333),  // 50% opacity of #333333
                     ),
+                    focusedBorder: InputBorder.none,
                   ),
-                  IconButton(
-                    icon: const Icon(Icons.add, color: Colors.blue),
-                    onPressed: _addIngredient,
-                  ),
-                ],
+                ),
               ),
             ),
             const SizedBox(height: 16),
+
+            // Add Button with the same width as the TextField
+            SizedBox(
+              width: double.infinity,  // Makes the button the same width as the TextField
+              child: ElevatedButton(
+                onPressed: _addIngredient,
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14), backgroundColor: Colors.blue, // Blue background
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: const Text('Add Ingredient', style: TextStyle(color: Colors.white)),
+              ),
+            ),
+            const SizedBox(height: 32),
 
             // Ingredients List Section
             if (_ingredients.isNotEmpty)
@@ -141,7 +150,6 @@ class _CreateMealContentState extends State<CreateMealContent> {
 
   // Placeholder for showing nutritional info
   void _showNutritionalInfo(String recipe) {
-    setState(() {
-    });
+    setState(() {});
   }
 }
