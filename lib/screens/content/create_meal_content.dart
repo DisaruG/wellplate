@@ -139,12 +139,16 @@ class _CreateMealContentState extends State<CreateMealContent> {
   void _fetchRecipes() async {
     try {
       List<String> recipes = await _apiService.fetchRecipes(_ingredients);
-      setState(() {
-        _recipes = recipes;
-      });
+      if (mounted) {  // Check if the widget is still mounted before calling setState
+        setState(() {
+          _recipes = recipes;
+        });
+      }
     } catch (e) {
       // Handle errors
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to load recipes')));
+      if (mounted) {  // Ensure context is still valid before showing a snackbar
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to load recipes')));
+      }
     }
   }
 
