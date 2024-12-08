@@ -8,7 +8,7 @@ class MyMealsScreen extends StatefulWidget {
 }
 
 class _MyMealsScreenState extends State<MyMealsScreen> {
-  String _selectedSegment = 'Build Your Meal'; // Default selected segment
+  String _selectedSegment = 'Create a Meal'; // Default selected segment
 
   @override
   Widget build(BuildContext context) {
@@ -48,8 +48,8 @@ class _MyMealsScreenState extends State<MyMealsScreen> {
                   ),
                   segments: const [
                     ButtonSegment(
-                      value: 'Build Your Meal',
-                      label: Text('Build Your Meal'),
+                      value: 'Create a Meal',
+                      label: Text('Create a Meal'),
                       icon: Icon(Icons.restaurant_menu),
                     ),
                     ButtonSegment(
@@ -71,17 +71,17 @@ class _MyMealsScreenState extends State<MyMealsScreen> {
           const SizedBox(height: 16),
           // Display content based on the selected segment
           Expanded(
-            child: _selectedSegment == 'Build Your Meal'
-                ? _buildBuildYourMeal()
-                : _buildGroceryShoppingList(),
+            child: _selectedSegment == 'Create a Meal'
+                ? _buildCreateAMeal()
+                : _buildShoppingList(),
           ),
         ],
       ),
     );
   }
 
-  // Widget for the Build Your Meal screen
-  Widget _buildBuildYourMeal() {
+  // Widget for the Create a Meal screen
+  Widget _buildCreateAMeal() {
     return const Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -89,7 +89,7 @@ class _MyMealsScreenState extends State<MyMealsScreen> {
           Icon(Icons.restaurant_menu, size: 100, color: Colors.blue),
           SizedBox(height: 16),
           Text(
-            'Start building your meal!',
+            'Start creating your meal!',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
         ],
@@ -97,8 +97,8 @@ class _MyMealsScreenState extends State<MyMealsScreen> {
     );
   }
 
-  // Widget for the Grocery Shopping List screen
-  Widget _buildGroceryShoppingList() {
+  // Widget for the Shopping List screen
+  Widget _buildShoppingList() {
     return const Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
