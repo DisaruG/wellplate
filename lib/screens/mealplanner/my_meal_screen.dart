@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:wellplate/screens/content/create_meal_content.dart'; // Import the Create Meal Content file
+import 'package:wellplate/screens/content/shopping_list_content.dart'; // Import the Shopping List Content file
 
 class MyMealsScreen extends StatefulWidget {
   const MyMealsScreen({super.key});
@@ -72,42 +74,8 @@ class _MyMealsScreenState extends State<MyMealsScreen> {
           // Display content based on the selected segment
           Expanded(
             child: _selectedSegment == 'Create a Meal'
-                ? _buildCreateAMeal()
-                : _buildShoppingList(),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // Widget for the Create a Meal screen
-  Widget _buildCreateAMeal() {
-    return const Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.restaurant_menu, size: 100, color: Colors.blue),
-          SizedBox(height: 16),
-          Text(
-            'Start creating your meal!',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // Widget for the Shopping List screen
-  Widget _buildShoppingList() {
-    return const Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.shopping_cart, size: 100, color: Colors.blue),
-          SizedBox(height: 16),
-          Text(
-            'No items in your shopping list yet!',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ? const CreateMealContent() // Use the Create Meal Content widget
+                : const ShoppingListContent(), // Use the Shopping List Content widget
           ),
         ],
       ),
