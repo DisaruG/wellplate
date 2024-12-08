@@ -8,7 +8,7 @@ class MyMealsScreen extends StatefulWidget {
 }
 
 class _MyMealsScreenState extends State<MyMealsScreen> {
-  String _selectedSegment = 'Planned Meals'; // Default selected segment
+  String _selectedSegment = 'Build Your Meal'; // Default selected segment
 
   @override
   Widget build(BuildContext context) {
@@ -48,14 +48,14 @@ class _MyMealsScreenState extends State<MyMealsScreen> {
                   ),
                   segments: const [
                     ButtonSegment(
-                      value: 'Planned Meals',
-                      label: Text('Planned Meals'),
-                      icon: Icon(Icons.calendar_today),
+                      value: 'Build Your Meal',
+                      label: Text('Build Your Meal'),
+                      icon: Icon(Icons.restaurant_menu),
                     ),
                     ButtonSegment(
-                      value: 'Meal History',
-                      label: Text('Meal History'),
-                      icon: Icon(Icons.history),
+                      value: 'Shopping List',
+                      label: Text('Shopping List'),
+                      icon: Icon(Icons.shopping_cart),
                     ),
                   ],
                   selected: <String>{_selectedSegment}, // Track the selected segment
@@ -71,25 +71,25 @@ class _MyMealsScreenState extends State<MyMealsScreen> {
           const SizedBox(height: 16),
           // Display content based on the selected segment
           Expanded(
-            child: _selectedSegment == 'Planned Meals'
-                ? _buildPlannedMeals()
-                : _buildMealHistory(),
+            child: _selectedSegment == 'Build Your Meal'
+                ? _buildBuildYourMeal()
+                : _buildGroceryShoppingList(),
           ),
         ],
       ),
     );
   }
 
-  // Widget for the Planned Meals screen
-  Widget _buildPlannedMeals() {
+  // Widget for the Build Your Meal screen
+  Widget _buildBuildYourMeal() {
     return const Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.calendar_today, size: 100, color: Colors.blue),
+          Icon(Icons.restaurant_menu, size: 100, color: Colors.blue),
           SizedBox(height: 16),
           Text(
-            'No meals planned yet!',
+            'Start building your meal!',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
         ],
@@ -97,16 +97,16 @@ class _MyMealsScreenState extends State<MyMealsScreen> {
     );
   }
 
-  // Widget for the Meal History screen
-  Widget _buildMealHistory() {
+  // Widget for the Grocery Shopping List screen
+  Widget _buildGroceryShoppingList() {
     return const Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.history, size: 100, color: Colors.blue),
+          Icon(Icons.shopping_cart, size: 100, color: Colors.blue),
           SizedBox(height: 16),
           Text(
-            'No meal history available!',
+            'No items in your shopping list yet!',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
         ],
