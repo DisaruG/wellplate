@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wellplate/api/api_service.dart'; // Import the ApiService
 
 class CreateMealContent extends StatefulWidget {
   const CreateMealContent({super.key});
@@ -10,172 +11,104 @@ class CreateMealContent extends StatefulWidget {
 class _CreateMealContentState extends State<CreateMealContent> {
   final TextEditingController _ingredientController = TextEditingController();
   final List<String> _ingredients = [];
-  final List<String> _recipes = [];
-  List<String> _nutritionalInfo = [];
+  List<String> _recipes = [];
+
+  // API Service instance
+  final ApiService _apiService = ApiService();
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Ingredient Input Section with Card Style
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.blue[50],
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 4,
-                  offset: Offset(0, 4),
-                ),
-              ],
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: TextField(
-                      controller: _ingredientController,
-                      decoration: const InputDecoration(
-                        labelText: 'Enter Ingredient',
-                        border: InputBorder.none,
-                        hintText: 'E.g., Chicken, Tomatoes',
+    return SingleChildScrollView(  // Make the entire content scrollable
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Ingredient Input Section with modern design
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.blue[50],
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 4,
+                    offset: Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: TextField(
+                        controller: _ingredientController,
+                        decoration: const InputDecoration(
+                          labelText: 'Enter Ingredient',
+                          border: InputBorder.none,
+                          hintText: 'E.g., Chicken, Tomatoes',
+                          focusedBorder: InputBorder.none,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.add, color: Colors.blue),
-                  onPressed: _addIngredient,
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 16),
-          // List of Ingredients with Styling
-          if (_ingredients.isNotEmpty)
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.blue[50],
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 4,
-                    offset: Offset(0, 4),
+                  IconButton(
+                    icon: const Icon(Icons.add, color: Colors.blue),
+                    onPressed: _addIngredient,
                   ),
                 ],
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Your Ingredients:',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 8),
-                    ..._ingredients.map((ingredient) => Text(
-                      '- $ingredient',
-                      style: const TextStyle(fontSize: 16),
-                    )),
-                  ],
-                ),
-              ),
             ),
-          const SizedBox(height: 32),
-          // Recipe Suggestions Section with a Card Style
-          if (_recipes.isNotEmpty)
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.blue[50],
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 4,
-                    offset: Offset(0, 4),
-                  ),
+            const SizedBox(height: 16),
+
+            // Ingredients List Section
+            if (_ingredients.isNotEmpty)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('Your Ingredients:', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue)),
+                  const SizedBox(height: 8),
+                  for (var ingredient in _ingredients)
+                    Row(
+                      children: [
+                        const Icon(Icons.circle, size: 8, color: Colors.blue),
+                        const SizedBox(width: 8),
+                        Text(ingredient, style: const TextStyle(color: Colors.blue)),
+                      ],
+                    ),
                 ],
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Suggested Recipes:',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 8),
-                    ..._recipes.map((recipe) {
-                      return GestureDetector(
+            const SizedBox(height: 32),
+
+            // Recipe Suggestions Section with Cards and Bullet Points
+            if (_recipes.isNotEmpty)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('Suggested Recipes:', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue)),
+                  const SizedBox(height: 8),
+                  for (var recipe in _recipes)
+                    Card(
+                      margin: const EdgeInsets.only(bottom: 8.0),
+                      elevation: 4,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      child: ListTile(
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                        title: Text(recipe, style: const TextStyle(color: Colors.blue)),
+                        trailing: const Icon(Icons.arrow_forward, color: Colors.blue),
                         onTap: () => _showNutritionalInfo(recipe),
-                        child: Card(
-                          margin: const EdgeInsets.symmetric(vertical: 8),
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Text(
-                              recipe,
-                              style: const TextStyle(fontSize: 16),
-                            ),
-                          ),
-                        ),
-                      );
-                    }),
-                  ],
-                ),
-              ),
-            ),
-          if (_recipes.isEmpty)
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 8.0),
-              child: Text('No recipes suggested yet.'),
-            ),
-          const SizedBox(height: 32),
-          // Nutritional Information Section with Modern Design
-          if (_nutritionalInfo.isNotEmpty)
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.green[50],
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 4,
-                    offset: Offset(0, 4),
-                  ),
+                      ),
+                    ),
                 ],
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Nutritional Information:',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 8),
-                    ..._nutritionalInfo.map((info) => Text(
-                      info,
-                      style: const TextStyle(fontSize: 16),
-                    )),
-                  ],
-                ),
+            if (_recipes.isEmpty)
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 8.0),
+                child: Text('No recipes suggested yet. Try adding some ingredients.', style: TextStyle(color: Colors.blueGrey)),
               ),
-            ),
-          if (_nutritionalInfo.isEmpty)
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 8.0),
-              child: Text('No nutritional information available.'),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -187,17 +120,28 @@ class _CreateMealContentState extends State<CreateMealContent> {
         _ingredients.add(_ingredientController.text);
       });
       _ingredientController.clear();
+
+      // Fetch recipes based on ingredients
+      _fetchRecipes();
     }
   }
 
-  // Show nutritional info for a recipe
+  // Fetch recipes from the API
+  void _fetchRecipes() async {
+    try {
+      List<String> recipes = await _apiService.fetchRecipes(_ingredients);
+      setState(() {
+        _recipes = recipes;
+      });
+    } catch (e) {
+      // Handle errors
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to load recipes')));
+    }
+  }
+
+  // Placeholder for showing nutritional info
   void _showNutritionalInfo(String recipe) {
     setState(() {
-      _nutritionalInfo = [
-        'Calories: 200 kcal',  // Placeholder values
-        'Fat: 10g',
-        'Protein: 15g',
-      ];
     });
   }
 }
