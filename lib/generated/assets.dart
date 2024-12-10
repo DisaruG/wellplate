@@ -5,6 +5,7 @@ class Assets {
   static const String assetsCarbonara = 'assets/carbonara.jpg';
   static const String assetsCheeseburger = 'assets/cheeseburger.jpg';
   static const String assetsDal = 'assets/Dal.jpg';
+  static const String assetsEating = 'assets/Eating.png';
   static const String assetsFitnesstracker = 'assets/Fitnesstracker.gif';
   static const String assetsGuacamole = 'assets/Guacamole.jpg';
   static const String assetsHealthyfood = 'assets/healthyfood.gif';
