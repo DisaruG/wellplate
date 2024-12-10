@@ -123,7 +123,6 @@ class _CreateMealContentState extends State<CreateMealContent> {
                       child: ListTile(
                         contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                         title: Text(recipe, style: const TextStyle(color: Colors.black)), // Changed text color to black
-                        trailing: const Icon(Icons.arrow_forward, color: Colors.green), // Changed icon color to green
                         onTap: () => _showNutritionalInfo(recipe),
                       ),
                     ),
