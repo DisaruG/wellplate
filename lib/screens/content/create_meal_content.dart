@@ -12,6 +12,7 @@ class _CreateMealContentState extends State<CreateMealContent> {
   final TextEditingController _ingredientController = TextEditingController();
   final List<String> _ingredients = [];
   List<String> _recipes = [];
+  bool _isLoading = false; // To track the loading state
 
   // API Service instance
   final ApiService _apiService = ApiService();
@@ -24,10 +25,10 @@ class _CreateMealContentState extends State<CreateMealContent> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Ingredient Input Section with modern design
+            // Ingredient Input Section with Icon
             Container(
               decoration: BoxDecoration(
-                color: Colors.blue[50],
+                color: Colors.white, // Background changed to white
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: const [
                   BoxShadow(
@@ -37,20 +38,27 @@ class _CreateMealContentState extends State<CreateMealContent> {
                   ),
                 ],
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: TextField(
-                  controller: _ingredientController,
-                  decoration: const InputDecoration(
-                    labelText: 'Enter Ingredient',
-                    border: InputBorder.none,
-                    hintText: 'Chicken, Tomatoes',
-                    hintStyle: TextStyle(
-                      color: Color(0x80333333), // 50% opacity of #333333
-                    ),
-                    focusedBorder: InputBorder.none,
+              child: Row(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Icon(Icons.search, color: Colors.grey), // Icon color changed to grey
                   ),
-                ),
+                  Expanded(
+                    child: TextField(
+                      controller: _ingredientController,
+                      decoration: const InputDecoration(
+                        labelText: 'Enter Ingredient',
+                        border: InputBorder.none,
+                        hintText: 'Chicken, Tomatoes',
+                        hintStyle: TextStyle(
+                          color: Color(0x80333333), // 50% opacity of #333333
+                        ),
+                        focusedBorder: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 16),
@@ -62,7 +70,7 @@ class _CreateMealContentState extends State<CreateMealContent> {
                 onPressed: _addIngredient,
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
-                  backgroundColor: Colors.blue, // Blue background
+                  backgroundColor: Colors.green, // Background color changed to green
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -72,34 +80,23 @@ class _CreateMealContentState extends State<CreateMealContent> {
             ),
             const SizedBox(height: 32),
 
-            // Ingredients Cards Section
+            // Ingredients Cards Section with Animated Chips
             if (_ingredients.isNotEmpty)
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Your Ingredients:', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue)),
+                  const Text('Your Ingredients:', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
                   const SizedBox(height: 8),
                   Wrap(
                     spacing: 8.0, // Horizontal spacing between cards
                     runSpacing: 8.0, // Vertical spacing between rows
                     children: _ingredients.map((ingredient) {
-                      return Card(
-                        elevation: 4,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(ingredient, style: const TextStyle(color: Colors.blue)),
-                              const SizedBox(width: 8),
-                              GestureDetector(
-                                onTap: () => _removeIngredient(ingredient),
-                                child: const Icon(Icons.close, color: Colors.red, size: 20),
-                              ),
-                            ],
-                          ),
-                        ),
+                      return Chip(
+                        backgroundColor: Colors.grey[200], // Changed background to light grey
+                        label: Text(ingredient, style: const TextStyle(color: Colors.black)), // Changed text color to black
+                        deleteIcon: const Icon(Icons.close, color: Colors.red),
+                        onDeleted: () => _removeIngredient(ingredient),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                       );
                     }).toList(),
                   ),
@@ -107,12 +104,16 @@ class _CreateMealContentState extends State<CreateMealContent> {
               ),
             const SizedBox(height: 32),
 
-            // Recipe Suggestions Section with Cards and Bullet Points
+            // Loader while fetching recipes
+            if (_isLoading)
+              const Center(child: CircularProgressIndicator(color: Colors.green)),
+
+            // Recipe Suggestions Section with Enhanced Cards
             if (_recipes.isNotEmpty)
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Suggested Recipes:', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue)),
+                  const Text('Suggested Recipes:', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
                   const SizedBox(height: 8),
                   for (var recipe in _recipes)
                     Card(
@@ -121,17 +122,29 @@ class _CreateMealContentState extends State<CreateMealContent> {
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                       child: ListTile(
                         contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                        title: Text(recipe, style: const TextStyle(color: Colors.blue)),
-                        trailing: const Icon(Icons.arrow_forward, color: Colors.blue),
+                        title: Text(recipe, style: const TextStyle(color: Colors.black)), // Changed text color to black
+                        trailing: const Icon(Icons.arrow_forward, color: Colors.green), // Changed icon color to green
                         onTap: () => _showNutritionalInfo(recipe),
                       ),
                     ),
                 ],
               ),
-            if (_recipes.isEmpty)
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 8.0),
-                child: Text('No recipes suggested yet. Try adding some ingredients.', style: TextStyle(color: Colors.blueGrey)),
+
+            // Empty State Illustration if no recipes or ingredients
+            if (_ingredients.isEmpty && _recipes.isEmpty)
+              const Column(
+                children: [
+                  Image(
+                    image: AssetImage('assets/Eating.png'), // Add your empty state image
+                    height: 200,
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    'No recipes yet! Start adding ingredients to see suggestions.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.blueGrey, fontSize: 16),
+                  ),
+                ],
               ),
           ],
         ),
@@ -157,20 +170,29 @@ class _CreateMealContentState extends State<CreateMealContent> {
     setState(() {
       _ingredients.remove(ingredient);
     });
+    _fetchRecipes(); // Fetch updated recipes after ingredient removal
   }
 
   // Fetch recipes from the API
   void _fetchRecipes() async {
+    setState(() {
+      _isLoading = true; // Set loading state to true when fetching
+    });
+
     try {
       List<String> recipes = await _apiService.fetchRecipes(_ingredients);
       if (mounted) { // Check if the widget is still mounted before calling setState
         setState(() {
           _recipes = recipes;
+          _isLoading = false; // Stop loading once recipes are fetched
         });
       }
     } catch (e) {
       // Handle errors
       if (mounted) { // Ensure context is still valid before showing a snackbar
+        setState(() {
+          _isLoading = false;
+        });
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to load recipes')));
       }
     }
@@ -178,6 +200,8 @@ class _CreateMealContentState extends State<CreateMealContent> {
 
   // Placeholder for showing nutritional info
   void _showNutritionalInfo(String recipe) {
-    setState(() {});
+    setState(() {
+      // Placeholder for showing nutritional information
+    });
   }
 }
