@@ -18,7 +18,7 @@ class _CreateMealContentState extends State<CreateMealContent> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(  // Make the entire content scrollable
+    return SingleChildScrollView( // Make the entire content scrollable
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -46,7 +46,7 @@ class _CreateMealContentState extends State<CreateMealContent> {
                     border: InputBorder.none,
                     hintText: 'Chicken, Tomatoes',
                     hintStyle: TextStyle(
-                      color: Color(0x80333333),  // 50% opacity of #333333
+                      color: Color(0x80333333), // 50% opacity of #333333
                     ),
                     focusedBorder: InputBorder.none,
                   ),
@@ -57,11 +57,12 @@ class _CreateMealContentState extends State<CreateMealContent> {
 
             // Add Button with the same width as the TextField
             SizedBox(
-              width: double.infinity,  // Makes the button the same width as the TextField
+              width: double.infinity, // Makes the button the same width as the TextField
               child: ElevatedButton(
                 onPressed: _addIngredient,
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14), backgroundColor: Colors.blue, // Blue background
+                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
+                  backgroundColor: Colors.blue, // Blue background
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -71,21 +72,37 @@ class _CreateMealContentState extends State<CreateMealContent> {
             ),
             const SizedBox(height: 32),
 
-            // Ingredients List Section
+            // Ingredients Cards Section
             if (_ingredients.isNotEmpty)
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text('Your Ingredients:', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue)),
                   const SizedBox(height: 8),
-                  for (var ingredient in _ingredients)
-                    Row(
-                      children: [
-                        const Icon(Icons.circle, size: 8, color: Colors.blue),
-                        const SizedBox(width: 8),
-                        Text(ingredient, style: const TextStyle(color: Colors.blue)),
-                      ],
-                    ),
+                  Wrap(
+                    spacing: 8.0, // Horizontal spacing between cards
+                    runSpacing: 8.0, // Vertical spacing between rows
+                    children: _ingredients.map((ingredient) {
+                      return Card(
+                        elevation: 4,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(ingredient, style: const TextStyle(color: Colors.blue)),
+                              const SizedBox(width: 8),
+                              GestureDetector(
+                                onTap: () => _removeIngredient(ingredient),
+                                child: const Icon(Icons.close, color: Colors.red, size: 20),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  ),
                 ],
               ),
             const SizedBox(height: 32),
@@ -135,18 +152,25 @@ class _CreateMealContentState extends State<CreateMealContent> {
     }
   }
 
+  // Remove Ingredient from the list
+  void _removeIngredient(String ingredient) {
+    setState(() {
+      _ingredients.remove(ingredient);
+    });
+  }
+
   // Fetch recipes from the API
   void _fetchRecipes() async {
     try {
       List<String> recipes = await _apiService.fetchRecipes(_ingredients);
-      if (mounted) {  // Check if the widget is still mounted before calling setState
+      if (mounted) { // Check if the widget is still mounted before calling setState
         setState(() {
           _recipes = recipes;
         });
       }
     } catch (e) {
       // Handle errors
-      if (mounted) {  // Ensure context is still valid before showing a snackbar
+      if (mounted) { // Ensure context is still valid before showing a snackbar
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to load recipes')));
       }
     }
