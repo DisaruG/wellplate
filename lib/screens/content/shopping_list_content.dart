@@ -121,6 +121,7 @@ class _ShoppingListContentState extends State<ShoppingListContent> {
               onTap: () {
                 Navigator.pop(context);
                 // Navigate to Notes screen
+                _navigateToScreen(context, 'Notes Screen');
               },
             ),
             ListTile(
@@ -129,6 +130,7 @@ class _ShoppingListContentState extends State<ShoppingListContent> {
               onTap: () {
                 Navigator.pop(context);
                 // Navigate to Grocery List screen
+                _navigateToScreen(context, 'Grocery List Screen');
               },
             ),
             ListTile(
@@ -137,6 +139,7 @@ class _ShoppingListContentState extends State<ShoppingListContent> {
               onTap: () {
                 Navigator.pop(context);
                 // Navigate to Meal Planner screen
+                _navigateToScreen(context, 'Meal Planner Screen');
               },
             ),
             ListTile(
@@ -149,6 +152,16 @@ class _ShoppingListContentState extends State<ShoppingListContent> {
           ],
         );
       },
+    );
+  }
+
+  // Navigate to the specified screen
+  void _navigateToScreen(BuildContext context, String screenName) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Navigate to $screenName'),
+        duration: const Duration(seconds: 2),
+      ),
     );
   }
 }
