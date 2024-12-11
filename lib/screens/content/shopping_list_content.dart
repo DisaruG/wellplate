@@ -9,6 +9,7 @@ class ShoppingListContent extends StatefulWidget {
 
 class _ShoppingListContentState extends State<ShoppingListContent> {
   final List<Map<String, dynamic>> _shoppingList = [];
+  final List<String> _notes = [];
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +18,43 @@ class _ShoppingListContentState extends State<ShoppingListContent> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Shopping List Items Section
+            // Notes Section at the top of the screen
+            if (_notes.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: _notes.map((note) {
+                    return Container(
+                      margin: const EdgeInsets.only(bottom: 12),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.05),
+                            blurRadius: 6,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: ListTile(
+                        title: Text(
+                          note,
+                          style: const TextStyle(fontSize: 18),
+                        ),
+                        trailing: IconButton(
+                          icon: const Icon(Icons.delete, color: Colors.red),
+                          onPressed: () => _removeNote(_notes.indexOf(note)),
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
+            // Shopping List Items Section below Notes
             Expanded(
               child: _shoppingList.isNotEmpty
                   ? ListView.builder(
@@ -58,7 +94,9 @@ class _ShoppingListContentState extends State<ShoppingListContent> {
                           decoration: item['bought']
                               ? TextDecoration.lineThrough
                               : TextDecoration.none,
-                          color: item['bought'] ? Colors.grey : Colors.black,
+                          color: item['bought']
+                              ? Colors.grey
+                              : Colors.black,
                         ),
                       ),
                       trailing: IconButton(
@@ -70,28 +108,14 @@ class _ShoppingListContentState extends State<ShoppingListContent> {
                 },
               )
                   : const Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.shopping_cart, size: 100, color: Color(0xFF1565C0)),
-                    SizedBox(height: 16),
-                    Text(
-                      'Your shopping list is empty!',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF1565C0),
-                      ),
-                    ),
-                  ],
-                ),
+                child: Text('Your shopping list is empty!'),
               ),
             ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _showOptions,
+        onPressed: _showAddNoteDialog,
         backgroundColor: const Color(0xFF1565C0),
         child: const Icon(Icons.add, color: Colors.white),
       ),
@@ -105,63 +129,46 @@ class _ShoppingListContentState extends State<ShoppingListContent> {
     });
   }
 
-  // Show options for different tools
-  void _showOptions() {
-    showModalBottomSheet(
+  // Remove note from the notes list
+  void _removeNote(int index) {
+    setState(() {
+      _notes.removeAt(index);
+    });
+  }
+
+  // Show dialog to add a new note
+  void _showAddNoteDialog() {
+    final TextEditingController controller = TextEditingController();
+    showDialog(
       context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-      ),
-      builder: (context) {
-        return Wrap(
-          children: [
-            ListTile(
-              leading: const Icon(Icons.note, color: Color(0xFF1565C0)),
-              title: const Text('Notes'),
-              onTap: () {
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Add New Note'),
+          content: TextField(
+            controller: controller,
+            decoration: const InputDecoration(hintText: 'Enter your note'),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
                 Navigator.pop(context);
-                // Navigate to Notes screen
-                _navigateToScreen(context, 'Notes Screen');
               },
+              child: const Text('Cancel'),
             ),
-            ListTile(
-              leading: const Icon(Icons.shopping_cart, color: Color(0xFF1565C0)),
-              title: const Text('Grocery List'),
-              onTap: () {
-                Navigator.pop(context);
-                // Navigate to Grocery List screen
-                _navigateToScreen(context, 'Grocery List Screen');
+            TextButton(
+              onPressed: () {
+                if (controller.text.isNotEmpty) {
+                  setState(() {
+                    _notes.add(controller.text);
+                  });
+                  Navigator.pop(context);
+                }
               },
-            ),
-            ListTile(
-              leading: const Icon(Icons.calendar_today, color: Color(0xFF1565C0)),
-              title: const Text('Meal Planner'),
-              onTap: () {
-                Navigator.pop(context);
-                // Navigate to Meal Planner screen
-                _navigateToScreen(context, 'Meal Planner Screen');
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.close, color: Colors.red),
-              title: const Text('Cancel'),
-              onTap: () {
-                Navigator.pop(context);
-              },
+              child: const Text('Add'),
             ),
           ],
         );
       },
-    );
-  }
-
-  // Navigate to the specified screen
-  void _navigateToScreen(BuildContext context, String screenName) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Navigate to $screenName'),
-        duration: const Duration(seconds: 2),
-      ),
     );
   }
 }
